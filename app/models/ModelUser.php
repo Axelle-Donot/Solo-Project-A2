@@ -12,6 +12,7 @@ class ModelUser {
 	private $first_name;
 	private $mail;
 	private $phone;
+	private $profile_photo_id;
 
 	public function getUserId() {
 		return $this->user_id;
@@ -38,6 +39,10 @@ class ModelUser {
 	}
 	public function getPhone() {
 		return $this->phone;
+	}
+
+	public function getProfilePhotoId() {
+		return $this->profile_photo_id;
 	}
 
 	public function setUserId($id) {
@@ -68,8 +73,11 @@ class ModelUser {
 		$this->phone = $phone;
 	}
 
+	public function setProfilePhotoId($photo) {
+		$this->profile_photo_id = $photo;
+	}
 
-	public function __construct($id, $username, $password, $lastname, $firstname, $mail, $phone) {
+	public function __construct($id, $username, $password, $lastname, $firstname, $mail, $phone, $photo = NULL) {
 		$this->user_id = $id;
 		$this->username = $username;
 		$this->password = $password;
@@ -77,6 +85,7 @@ class ModelUser {
 		$this->first_name = $firstname;
 		$this->mail = $mail;
 		$this->phone = $phone;
+		$this->profile_photo_id = $photo;
 	}
 }
 ?>

@@ -8,6 +8,7 @@ class ModelProduct {
 	private $product_id;
 	private $tag_id;
 	private $discount_id;
+	private $name;
 	private $price;
 	private $rating;
 
@@ -21,6 +22,10 @@ class ModelProduct {
 
 	public function getDiscountId() {
 		return $this->discount_id;
+	}
+
+	public function getName() {
+		return $this->name;
 	}
 
 	public function getPrice() {
@@ -43,6 +48,10 @@ class ModelProduct {
 		$this->discount_id = $discount;
 	}
 
+	public function setName($name) {
+		$this->name = $name;
+	}
+
 	public function setPrice($price) {
 		$this->price = $price;
 	}
@@ -51,10 +60,11 @@ class ModelProduct {
 		$this->rating = $rate;
 	}
 
-	public function __construct($id, $tag = NULL, $discount = NULL, $price, $rating = NULL) {
+	public function __construct($id, $tag = NULL, $discount = NULL, $name, $price, $rating = NULL) {
 		$this->product_id = $id;
 		$this->tag_id = $tag;
 		$this->discount_id = $discount;
+		$this->name = $name;
 		$this->price = $price;
 		$this->rating = $rate;
 	}
