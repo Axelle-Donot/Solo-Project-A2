@@ -81,7 +81,7 @@ CREATE TABLE `proj__ordered_product` (
 
 CREATE TABLE `proj__product` (
   `product_id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL,
+  `tag_id` int(11) DEFAULT NULL,
   `discount_id` int(11) DEFAULT NULL,
   `price` double NOT NULL,
   `rating` int(11) DEFAULT NULL
