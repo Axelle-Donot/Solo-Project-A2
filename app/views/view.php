@@ -1,22 +1,28 @@
+<?php
+$page_title = $pagetitle ?? "error";
+$view = $view ?? "error";
+?>
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title><?php echo $pagetitle; ?></title>
-    </head>
-    <header>
-        
-    </header>
-    <body>
-    <?php
-    
-        $filepath = File::build_path(array("View", $controller, "$view"));
-        require $filepath;
-    ?>
-    </body>
-    <footer>
-        <p style="border: 1px solid black;text-align:right;padding-right:1em;">
-        Site de covoiturage
-        </p>
-    </footer>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title><?= $page_title; ?></title>
+    <link rel="stylesheet" href="<?= File::getPublic(array('assets', 'lib', 'bootstrap.min.css')) ?>"/>
+  </head>
+  <body>
+    <?php require_once File::build_path(array("views", "element", "header.php")); ?>
+    <div class="container">
+      <?php
+      $filepath = File::getapp(array("views", self::$object, "$view.php"));
+      require_once $filepath;
+      ?>
+    </div>
+    <div class="footer">
+      Site de projet Solo - Q5
+    </div>
+    <script src="<?= File::getPublic(array('assets', 'lib', 'bootstrap.bundle.min.js')) ?>"></script>
+  </body>
 </html>

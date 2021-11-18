@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+.footer {
+    border-top: 1px solid black;
+    text-align: right;
+    padding: 0.5em 1em 0.5em 0;
+    margin-top: 1em;
+}

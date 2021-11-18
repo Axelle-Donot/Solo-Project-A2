@@ -1,6 +1,3 @@
 <?php
-$DS = DIRECTORY_SEPARATOR;
-require_once (__DIR__ . $DS . 'lib' . $DS . 'File.php');
-
-require_once File::build_path(array("Controller","routeur.php"));
-?>
+require_once '../app/lib/File.php';
+require_once File::getapp(array("controllers", "router.php"));
