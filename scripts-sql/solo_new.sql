@@ -142,8 +142,7 @@ CREATE TABLE `proj__images` (
     `img_desc` VARCHAR( 100 ) NOT NULL ,
     `img_blob` BLOB NOT NULL ,
     PRIMARY KEY ( `img_id` )
-)
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
