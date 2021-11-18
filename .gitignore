@@ -96,5 +96,7 @@ modules.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all
 
-
+# File and folders of the project to ignore
+Config.php
+Conf.php
 ._*
