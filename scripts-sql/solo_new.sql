@@ -82,6 +82,7 @@ CREATE TABLE `proj__product` (
   `product_id` int(11) NOT NULL,
   `tag_id` int(11) DEFAULT NULL,
   `discount_id` int(11) DEFAULT NULL,
+  `product_picture_id` int(11) DEFAULT NULL,
   `price` double NOT NULL,
   `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -119,12 +120,30 @@ CREATE TABLE `proj__tag` (
 CREATE TABLE `proj__user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
+  `profile_photo_id` INT(11) DEFAULT NULL,
   `password` varchar(64) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `mail` varchar(64) NOT NULL,
   `phone` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `proj__images`
+--
+
+CREATE TABLE `proj__images` (
+    `img_id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `img_name` VARCHAR( 50 ) NOT NULL ,
+    `img_size` VARCHAR( 25 ) NOT NULL ,
+    `img_type` VARCHAR( 25 ) NOT NULL ,
+    `img_desc` VARCHAR( 100 ) NOT NULL ,
+    `img_blob` BLOB NOT NULL ,
+    PRIMARY KEY ( `img_id` )
+)
+
 
 -- --------------------------------------------------------
 
@@ -165,7 +184,8 @@ ALTER TABLE `proj__ordered_product`
 ALTER TABLE `proj__product`
   ADD PRIMARY KEY (`product_id`),
   ADD KEY `fk_tag_id_product` (`tag_id`),
-  ADD KEY `fk_discount_id_product` (`discount_id`);
+  ADD KEY `fk_discount_id_product` (`discount_id`),
+  ADD KEY `fk_product_picture_id_product` (`product_picture_id`);
 
 --
 -- Index pour la table `proj__shopping_cart`
@@ -185,7 +205,8 @@ ALTER TABLE `proj__tag`
 -- Index pour la table `proj__user`
 --
 ALTER TABLE `proj__user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `fk_profile_photo_id_user` (`profile_photo_id`);
 
 -- --------------------------------------------------------
 
@@ -261,7 +282,8 @@ ALTER TABLE `proj__ordered_product`
 --
 ALTER TABLE `proj__product`
   ADD CONSTRAINT `fk_discount_id_product` FOREIGN KEY (`discount_id`) REFERENCES `proj__discount` (`discount_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_tag_id_product` FOREIGN KEY (`tag_id`) REFERENCES `proj__tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_tag_id_product` FOREIGN KEY (`tag_id`) REFERENCES `proj__tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  ADD CONSTRAINT `fk_product_picture_id_product` FOREIGN KEY (`product_picture_id`) REFERENCES `proj__images` (`img_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `proj__shopping_cart`
@@ -269,6 +291,11 @@ ALTER TABLE `proj__product`
 ALTER TABLE `proj__shopping_cart`
   ADD CONSTRAINT `fk_customer_id_order` FOREIGN KEY (`customer_id`) REFERENCES `proj__user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Contraintes pour la table `proj__user`
+--
+ALTER TABLE `proj__user`
+  ADD CONSTRAINT `fk_profile_photo_id_user` FOREIGN KEY (`profile_photo_id`) REFERENCES `proj__images` (`img_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
