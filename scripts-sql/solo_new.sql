@@ -82,6 +82,8 @@ CREATE TABLE `proj__product` (
   `product_id` int(11) NOT NULL,
   `tag_id` int(11) DEFAULT NULL,
   `discount_id` int(11) DEFAULT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(256) DEFAULT NULL,
   `product_picture_id` int(11) DEFAULT NULL,
   `price` double NOT NULL,
   `rating` int(11) DEFAULT NULL
@@ -182,6 +184,7 @@ ALTER TABLE `proj__ordered_product`
 --
 ALTER TABLE `proj__product`
   ADD PRIMARY KEY (`product_id`),
+  ADD UNIQUE KEY `unique_name_product` (`name`),
   ADD KEY `fk_tag_id_product` (`tag_id`),
   ADD KEY `fk_discount_id_product` (`discount_id`),
   ADD KEY `fk_product_picture_id_product` (`product_picture_id`);
