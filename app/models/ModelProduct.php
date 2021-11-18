@@ -1,6 +1,6 @@
 <?php
 
-require_once File::getApp("models","Model.php");
+require_once File::getApp(array("models","Model.php"));
 
 
 class ModelProduct {
