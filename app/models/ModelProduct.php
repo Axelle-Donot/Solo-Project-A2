@@ -68,6 +68,14 @@ class ModelProduct {
 		$this->price = $price;
 		$this->rating = $rate;
 	}
+
+
+	public static function getAllProduits(){
+    $rep = Model::getPDO()->query('SELECT * FROM proj__product');
+    $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
+    $tab_voit = $rep->fetchAll();
+    return $tab_voit;
+  }
 }
 
 ?>

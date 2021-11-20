@@ -1,5 +1,5 @@
 <?php
-require_once File::build_path(array("model","ModelVoiture.php")); //chargement du modèle
+require_once File::getApp(array("models","ModelVoiture.php")); //chargement du modèle
 
 class ControllerProduit {
     private static $object = "product";
