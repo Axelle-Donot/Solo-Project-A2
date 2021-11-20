@@ -37,15 +37,39 @@ class ModelImages {
 		return $this->img_blob;
 	}
 
-	public function __construct($id, $uid, $street, $city, $state, $zip, $country, $sup) {
-		$this->address_id = $id;
-		$this->user_id = $uid;
-		$this->street = $street;
-		$this->city = $city;
-		$this->state = $state;
-		$this->zip_code = $zip;
-		$this->country = $country;
-		$this->supplement = $sup;
+	public function setImgId($id) {
+		$this->img_id = $id;
+	}
+
+	public function setImgName($name) {
+		$this->img_name = $name;
+	}
+
+	public function setImgSize($size) {
+		$this->img_size = $size;
+	}
+
+	public function setImgType($type) {
+		$this->img_type = $type;
+	}
+
+	public function setImgDesc($desc) {
+		$this->img_type = $id;
+	}
+
+	public function setImgBlob($blob) {
+		$this->img_blob = $blob;
+	}
+
+	
+
+	public function __construct($id, $name, $size, $type, $desc, $blob) {
+		$this->img_id = $id;
+		$this->img_name = $name;
+		$this->img_size = $size;
+		$this->img_type = $type;
+		$this->img_desc = $desc;
+		$this->img_blob = $blob;
 	}
 }
 
