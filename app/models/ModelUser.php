@@ -77,15 +77,33 @@ class ModelUser {
 		$this->profile_photo_id = $photo;
 	}
 
-	public function __construct($id, $username, $password, $lastname, $firstname, $mail, $phone, $photo = NULL) {
-		$this->user_id = $id;
-		$this->username = $username;
-		$this->password = $password;
-		$this->last_name = $lastname;
-		$this->first_name = $firstname;
-		$this->mail = $mail;
-		$this->phone = $phone;
-		$this->profile_photo_id = $photo;
+	public function __construct($id = NULL, $username = NULL, $password = NULL, $lastname = NULL, $firstname = NULL, $mail = NULL, $phone = NULL, $photo = NULL){
+
+		if (!is_null($id) && !is_null($username) && !is_null($password) && !is_null($lastname) && !is_null($firstname) && !is_null($mail) && !is_null($phone) && !is_null($photo)) { 
+
+			$this->user_id = $id;
+			$this->username = $username;
+			$this->password = $password;
+			$this->last_name = $lastname;
+			$this->first_name = $firstname;
+			$this->mail = $mail;
+			$this->phone = $phone;
+			$this->profile_photo_id = $photo;
+		}	
 	}
+
+	public static function getAllUsers() {
+        try {
+            $rep = Model::getPDO()->query('SELECT * FROM proj__user');
+            $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
+        } catch (PDOException $e) {
+            if (Conf::getDebug())
+                echo $e->getMessage(); // affiche un message d'erreur
+            else
+                echo 'Une erreur est survenue';
+            die();
+        }
+        return $rep->fetchAll();
+    }
 }
 ?>
