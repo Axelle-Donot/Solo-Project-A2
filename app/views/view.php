@@ -13,7 +13,7 @@ $view = $view ?? "error";
     <link rel="stylesheet" href="<?= File::getPublic(array('assets', 'lib', 'bootstrap.min.css')) ?>"/>
   </head>
   <body>
-    <?php require_once File::build_path(array("views", "element", "header.php")); ?>
+    <?php require_once File::getApp(array("views", "element", "header.php")); ?>
     <div class="container">
       <?php
       $filepath = File::getapp(array("views", self::$object, "$view.php"));

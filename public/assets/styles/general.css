@@ -1,7 +1,11 @@
+@import "menu.css";
+
 body {
+    background: #000 url("../img/BG_stars.png") repeat;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
 .container {
