@@ -2,7 +2,7 @@
 require_once File::getApp(array("lib","Conf.php"));
 class Model {
 
-  private static $pdo;
+  private static $pdo = NULL;
 
   private static function Init() {
     $hostname = Conf::getHostname();
@@ -31,7 +31,6 @@ class Model {
     }
     return self::$pdo;
   }
-
 }
 
 

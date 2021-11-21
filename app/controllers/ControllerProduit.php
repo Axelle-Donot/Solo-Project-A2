@@ -8,8 +8,10 @@ class ControllerProduit {
         $pagetitle = 'Boutique';
         $view = 'liste';
         $tab_prod = ModelProduct::getAllProducts();     //appel au model pour gerer la BD
-        require File::getApp(array("views","view.php"));  //"redirige" vers la vue
+        require (File::getApp(array("views","view.php")));  //"redirige" vers la vue
     }
+
+    
 
     public static function read() {
         
