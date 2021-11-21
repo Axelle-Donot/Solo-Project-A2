@@ -1,18 +1,14 @@
 <?php
 require_once File::getApp(array("models", "Model.php"));
 
-class ModelAddress extends Model {
-  private $address_id;
-  private $user_id;
-  private $street;
-  private $city;
-  private $state;
-  private $zip_code;
-  private $country;
-  private $supplement;
+class Ordered_product extends Model {
+  private $ordered_id;
+  private $customer_id;
+  private $date;
+  private $total_price;
 
-  protected static $object = "address";
-  protected static $primary = "address_id";
+  protected static $object = "ordered_product";
+  protected static $primary = "ordered_id";
 
   public function __construct($data = NULL) {
     if (!is_null($data)) {

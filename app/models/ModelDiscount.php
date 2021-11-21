@@ -1,41 +1,47 @@
 <?php
+require_once File::getApp(array("models", "Model.php"));
 
-require_once File::getApp(array("models","Model.php"));
+class ModelDiscount extends Model {
+  private $discount_id;
+  private $reduction;
+  private $is_percentage;
 
-class ModelDiscount {
+  protected static $object = "discount";
+  protected static $primary = "discount_id";
 
-	private $discount_id;
-	private $reduction;
-	private $is_percentage;
+  public function __construct($id = NULL, $reduction = NULL, $percentage = NULL) {
+    if (!is_null($id) && !is_null($reduction) && !is_null($percentage)) {
+      $this->discount_id = $id;
+      $this->reduction = $reduction;
+      $this->is_percentage = $percentage;
+    }
+  }
 
-	public function getDiscountId() {
-		return $this->discount_id;
-	}
+  // --- GETTERS ---
 
-	public function getReduction() {
-		return $this->reduction;
-	}
+  public function getDiscountId() {
+    return $this->discount_id;
+  }
 
-	public function getIsPercentage() {
-		return $this->is_percentage;
-	}
+  public function getReduction() {
+    return $this->reduction;
+  }
 
-	public function setDiscountId($id) {
-		$this->discount_id = $id;
-	}
+  public function getIsPercentage() {
+    return $this->is_percentage;
+  }
 
-	public function setPassword($reduction) {
-		$this->reduction = $reduction;
-	}
+  // --- SETTERS ---
 
-	public function setIsPercentage($percentage) {
-		$this->is_percentage = $percentage;
-	}
+  public function setDiscountId($id) {
+    $this->discount_id = $id;
+  }
 
-	public function __construct($id, $reduction, $percentage) {
-		$this->discount_id = $id;
-		$this->reduction = $reduction;
-		$this->is_percentage = $percentage;
-	}
+  public function setPassword($reduction) {
+    $this->reduction = $reduction;
+  }
+
+  public function setIsPercentage($percentage) {
+    $this->is_percentage = $percentage;
+  }
 }
-?>

@@ -1,42 +1,47 @@
 <?php
+require_once File::getApp(array("models", "Model.php"));
 
-require_once File::getApp(array("models","Model.php"));
+class ModelTag extends Model {
+  private $tag_id;
+  private $name;
+  private $description;
 
+  protected static $object = "tag";
+  protected static $primary = "tag_id";
 
-class ModelTag {
+  public function __construct($id = NULL, $name = NULL, $description = NULL) {
+    if (!is_null($id) && !is_null($name) && !is_null($description)) {
+      $this->tag_id = $id;
+      $this->name = $name;
+      $this->description = $description;
+    }
+  }
 
-	private $tag_id;
-	private $name;
-	private $description;
+  // --- GETTERS ---
 
-	public function getTagId() {
-		return $this->tag_id;
-	}
+  public function getTagId() {
+    return $this->tag_id;
+  }
 
-	public function getName() {
-		return $this->name;
-	}
+  public function getName() {
+    return $this->name;
+  }
 
-	public function getDescription() {
-		return $this->description;
-	}
+  public function getDescription() {
+    return $this->description;
+  }
 
-	public function setTagId($id) {
-		$this->tag_id = $id;
-	}
+  // --- SETTERS ---
 
-	public function setName($name) {
-		$this->name = $name;
-	}
+  public function setTagId($id) {
+    $this->tag_id = $id;
+  }
 
-	public function setDescription($description) {
-		$this->description = $description;
-	}
+  public function setName($name) {
+    $this->name = $name;
+  }
 
-	public function __construct($id, $name, $description) {
-		$this->tag_id = $id;
-		$this->name = $name;
-		$this->description = $description;
-	}
+  public function setDescription($description) {
+    $this->description = $description;
+  }
 }
-?>

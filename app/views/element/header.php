@@ -1,8 +1,10 @@
+<?php $url_root = Conf::getUrlRoot() ?>
+
 <header id="default">
   <div class="header-top">
     <div class="left-header-top">
-      <a href="#">
-        <img class="banner-logo" src="<?= File::getPublic(array('assets', 'img', 'Banner_Solo.png')) ?>" alt="Bannière du site : Solo - The way of the saber">
+      <a href="<?= $url_root ?>">
+        <img class="banner-logo" src="assets/img/Banner_Solo.png" alt="Bannière du site : Solo - The way of the saber">
       </a>
     </div>
     <div class="right-header-top">
@@ -90,11 +92,11 @@
 
   <nav>
     <div>
-      <a href="#">Boutique</a>
+      <a href="?a=readAll&c=product">Produits</a>
     </div>
 
     <div>
-      <a href="#">Contact</a>
+      <a href="?a=readAll&c=user">Utilisateurs</a>
     </div>
   </nav>
 
