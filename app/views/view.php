@@ -13,11 +13,11 @@ $view = $view ?? "error";
     <link rel="stylesheet" href="<?= File::getPublic(array('assets', 'lib', 'bootstrap.min.css')) ?>"/>
   </head>
   <body>
-    <?php require_once File::build_path(array("views", "element", "header.php")); ?>
+    <?php require_once File::getApp(array("views", "element", "header.php")); ?>
     <div class="container">
       <?php
-      $filepath = File::getapp(array("views", self::$object, "$view.php"));
-      require_once $filepath;
+        $filepath = File::getApp(array("views", self::$object, "$view.php"));
+        require_once $filepath;
       ?>
     </div>
     <div class="footer">
@@ -26,3 +26,5 @@ $view = $view ?? "error";
     <script src="<?= File::getPublic(array('assets', 'lib', 'bootstrap.bundle.min.js')) ?>"></script>
   </body>
 </html>
+
+

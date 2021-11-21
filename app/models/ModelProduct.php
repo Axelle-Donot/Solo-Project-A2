@@ -70,11 +70,11 @@ class ModelProduct {
 	}
 
 
-	public static function getAllProduits(){
+	public static function getAllProducts(){
     $rep = Model::getPDO()->query('SELECT * FROM proj__product');
-    $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
-    $tab_voit = $rep->fetchAll();
-    return $tab_voit;
+    $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+    $tab_prod= $rep->fetchAll();
+    return $tab_prod;
   }
 }
 
