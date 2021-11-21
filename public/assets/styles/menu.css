@@ -132,15 +132,6 @@ div.right-header-top div {
 	}
 }
 
-.popup .content-popup > form {
-	display: flex;
-	flex-direction: column;
-}
-
-.popup .content-popup > form input {
-	margin-bottom: 1em;
-}
-
 .popup .content-popup .link-button {
 	background-color: var(--bg-color);
   padding: 0.2em 0.5em;
@@ -162,10 +153,6 @@ div.right-header-top div {
 
 .account .popup .close:hover {
 	color: #f00;
-}
-
-.account .popup h2 {
-	margin-top: 0;
 }
 
 .account div.register {
