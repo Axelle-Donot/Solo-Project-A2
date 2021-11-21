@@ -1,15 +1,17 @@
 <?php
-require_once File::build_path(array("model","ModelVoiture.php")); //chargement du modèle
+require_once File::getApp(array("models","ModelProduct.php")); //chargement du modèle
 
 class ControllerProduit {
     private static $object = "product";
 
     public static function readAll() {
         $pagetitle = 'Boutique';
-        $view = 'list';
-        $tab_v = ModelProduit::getAllProduits();     //appel au model pour gerer la BD
-        require File::build_path(array("views","view.php"));  //"redirige" vers la vue
+        $view = 'liste';
+        $tab_prod = ModelProduct::getAllProducts();     //appel au model pour gerer la BD
+        require (File::getApp(array("views","view.php")));  //"redirige" vers la vue
     }
+
+    
 
     public static function read() {
         
