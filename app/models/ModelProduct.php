@@ -21,6 +21,28 @@ class ModelProduct extends Model {
     }
   }
 
+  public function getBlob() {
+    $sql = "SELECT `img_type`, `img_blob` FROM `proj__images` WHERE `img_id` = :img_id;";
+
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $req_prep->execute(array("img_id" => $this->product_picture_id));
+      $array_res = $req_prep->fetch(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+
+    $res = array(
+      "type" => $array_res["img_type"] ?? "default",
+      "blob" => base64_encode($array_res['img_blob'] ?? "default")
+    );
+    return $res;
+  }
+
   // --- GETTERS ---
 
   public function get($nom_attribut) {
