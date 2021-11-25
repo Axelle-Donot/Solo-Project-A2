@@ -1,12 +1,15 @@
 <h2>Les produits :</h2>
-<ul>
+<div class="produits">
   <?php
   foreach ($tab_prod as $p) {
+    $id = $p->get('product_id');
     $product = htmlspecialchars($p);
-    echo "<li>";
-    echo "<img src='{$p->getBlob()}'>";
-    echo "<h2>$product</h2>";
-    echo "</li>";
-  }
+    echo "<div>";
+      echo " <a href='?a=read&id=$id' > " ;
+        echo "<img src='{$p->getBlob()}'>";
+        echo "<h2>$product</h2>";
+      echo " </a>" ;
+    echo " </div>" ;
+  };
   ?>
-</ul>
+</div>
