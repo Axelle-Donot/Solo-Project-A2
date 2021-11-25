@@ -1,9 +1,8 @@
-<div id="popup1" class="overlay">
+<div id="popup1" class="overlay w-100">
   <div class="popup">
-    <h2>Connexion</h2>
-    <a class="close" href="#">×</a>
+    <h2 style="text-align: center">Connexion</h2>
     <div class="content-popup">
-      <form action="#" method="post">
+      <form action="?a=connected&c=user" method="post">
         <div class="mb-3">
           <label for="username-login" class="form-label">Nom d'utilisateur&nbsp;:</label>
           <input id="username-login" class="form-control" type="text"  name="username" placeholder="Jean-michel34"
@@ -17,6 +16,6 @@
         <input type="submit" class="btn btn-primary" value="Login">
       </form>
     </div>
-    <p><a href="#popup2">Pas encore inscrit&nbsp;?</a></p>
+    <div class="d-flex justify-content-center"><a href="?a=register&c=user">Pas encore inscrit&nbsp;?</a></div>
   </div>
 </div>
