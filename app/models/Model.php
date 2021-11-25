@@ -50,5 +50,29 @@ class Model {
 
     return $tab ?? false;
   }
+
+  public static function select($primaryValue) {
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    echo $class_name;
+    $pkey = static::$primary;
+
+    $sql = "SELECT * FROM `proj__" . $table_name . "` WHERE `" . $pkey . "`=:tag;";
+    try {
+
+      $db = self::getPdo();
+      $rep = $db->prepare($sql);
+      $rep->execute(array("tag" => $primaryValue));
+      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+      $el = $rep->fetch();
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+
+    return $el ?? false;
+  }
 }
 
