@@ -11,23 +11,20 @@
       <div class="account">
         <div class="login">
           <i class="fas fa-user"></i>
-          <a href="#popup1" class="login-a">Se connecter</a>
+          <a href="?a=login&c=user" class="login-a">Se connecter</a>
         </div>
-        <?php require_once File::getApp(array("views", "element", "login-modal.php")) ?>
         <span>|</span>
         <div class="register">
-          <a href="#popup2">S'inscrire</a>
+          <a href="?a=register&c=user">S'inscrire</a>
         </div>
-        <?php require_once File::getApp(array("views", "element", "register-modal.php")); ?>
       </div>
       <div class="panier">
         <div class="cart">
-          <a href="#popup3">
+          <a href="?a=showCart&c=user">
             <i class="fas fa-shopping-cart"></i>
             Panier
           </a>
         </div>
-        <?php require_once File::getApp(array("views", "element", "cart-modal.php")); ?>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-light" type="submit">Search</button>
