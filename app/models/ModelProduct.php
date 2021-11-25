@@ -21,7 +21,7 @@ class ModelProduct extends Model {
     }
   }
 
-  public function getBlob() {
+  public function getBlob():string {
     $sql = "SELECT `img_type`, `img_blob` FROM `proj__images` WHERE `img_id` = :img_id;";
 
     try {
@@ -33,14 +33,14 @@ class ModelProduct extends Model {
       if (Conf::getDebug()) {
         echo $e->getMessage();
       }
-      return false;
+      return "a";
     }
 
     $res = array(
       "type" => $array_res["img_type"] ?? "default",
       "blob" => base64_encode($array_res['img_blob'] ?? "default")
     );
-    return $res;
+    return "data:image/{$res['type']};base64, {$res['blob']}";
   }
 
   // --- GETTERS ---
