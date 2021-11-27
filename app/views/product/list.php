@@ -6,7 +6,7 @@
     $prix = $p->get('price');
     $product = htmlspecialchars($p);
     echo "<div>";
-      echo " <a href='?a=read&id=$id' > " ;
+      echo " <a href='?a=read&c=product&id=$id' > " ;
         echo "<img src='{$p->getBlob()}'>";
         echo "<h2>$product</h2>";
         echo "<p>$prix €</p>";

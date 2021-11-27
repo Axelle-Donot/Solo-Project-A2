@@ -54,7 +54,6 @@ class Model {
   public static function select($primaryValue) {
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
-    echo $class_name;
     $pkey = static::$primary;
 
     $sql = "SELECT * FROM `proj__" . $table_name . "` WHERE `" . $pkey . "`=:tag;";

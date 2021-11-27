@@ -124,16 +124,16 @@ div.produits > div {
 	margin: 15px;
 }
 
-div > div > a > img{
+div.produits > div > a > img{
 	width: 70%;
 }
 
-div > div > a{
+div.produits > div > a{
 	color: black;
 	text-decoration : none;
 }
 
- div > div > a:hover  {
+div.produits > div > a:hover{
 	color: black;
 	text-decoration: none ;
 }
@@ -142,5 +142,44 @@ div.produits > div:hover{
 	background-color: #C0C0C0;
 }
 
+div.accueil {
+	background-color: #363638;
+}
 
+div.accueil > h1{
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	color : white;
+	font-size: 100px;
+}
+
+div.accueil > a > img{
+	width: 50%;
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
+div.accueil > a {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	text-decoration: none;
+}
+
+div.accueil > a > p {
+	text-align: center;
+	font-size: 100px;
+	color: white;
+}
+
+div.image > img{
+	width: 80%;
+	margin-bottom: 20px;
+}
+
+div.image {
+	text-align: center;
+}
 

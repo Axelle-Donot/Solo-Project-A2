@@ -44,4 +44,24 @@ class ModelDiscount extends Model {
   public function setIsPercentage($percentage) {
     $this->is_percentage = $percentage;
   }
+
+  public static function getReductionById($id) {
+    $sql = "SELECT reduction from proj__discount WHERE discount_id=:id"; // Préparation de la requête
+    $req_prep = Model::getPDO()->prepare($sql);
+
+    $values = array(
+        "id" => $id,
+        //nomdutag => valeur, ...
+    );
+    // On donne les valeur s et on exécute la requête     
+    $req_prep->execute($values);
+
+    // On récupère les résultats comme précédemment
+    $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelDiscount');
+    $tab_red = $req_prep->fetchAll();
+    // Attention, si il n'y a pas de résultats, on renvoie false
+    if (empty($tab_red))
+        return false;
+    return $tab_red[0];
+  }
 }

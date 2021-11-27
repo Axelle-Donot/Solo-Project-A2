@@ -1,15 +1,16 @@
-<h2> Accueil </h2>
-<?php
-echo "<div class="Accueil">";
-	echo "<h2>"BLACK FRIDAY"</h2>";
-	echo "<div>"
-		echo "$value->"sabre 1";"
-		<img src='{$value->getBlob()}' alt='img du produit {$value}'>
-		<p>"-50%"</p>
-	</div>
+<div class="accueil">
+	<?php
+		$p = ModelProduct::select(2);
+		$id = $p->get('product_id');
+	  	$product = htmlspecialchars($p);
 
-</div>
-
-"
-?>
+	 	//$idreduction = ModelDiscount::getReductionById($p->get('discount_id'));
+	 	//echo $idreduction;
+	    echo "<h1>BLACK FRIDAY !!!</h1>";
+	      echo " <a href='?a=read&c=product&id=$id' > " ;
+	        echo "<img src='{$p->getBlob()}'>";
+	        echo "<p>-50%</p>";
+	      echo " </a>" ;
+	?>
+</div>   
 
