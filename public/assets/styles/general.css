@@ -113,17 +113,34 @@ html {
 	display: flex;
 	flex-direction: row;
 	text-align: center;
-	justify-content: space-around;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
 }
 
- div > div > a  {
+div.produits > div {
+	width: 40%;
+	background-color: #E7E7E7;
+	padding: 10px;
+	margin: 15px;
+}
+
+div > div > a > img{
+	width: 70%;
+}
+
+div > div > a{
+	color: black;
+	text-decoration : none;
+}
+
+ div > div > a:hover  {
 	color: black;
 	text-decoration: none ;
 }
 
-div > div > a:hover{
-	color: black;
-	text-decoration: underline;
+div.produits > div:hover{
+	background-color: #C0C0C0;
 }
+
 
 
