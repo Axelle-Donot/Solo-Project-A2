@@ -78,9 +78,11 @@ class Model {
   {
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
-    $pkey = static::$primary;
+    $pkey = static::$primary;   //cart_id
+    
 
-    $sql = "INSERT INTO `proj__" . $table_name . "` VALUES `" . $pkey . "`=:tag;";
+    //$sql = "INSERT INTO proj__" . $table_name . " VALUES " . "(1,":tag",1)";
+    $sql = "SELECT * FROM proj_produit";
     try {
 
       $db = self::getPdo();
