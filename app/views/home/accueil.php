@@ -11,6 +11,8 @@
   echo "<img src='{$p->getBlob()}'>";
   echo "<p>-50%</p>";
   echo "</a>";
+  require_once File::getApp(array("views","contact","contact.php"));
   ?>
-</div>   
+</div>
+
 
