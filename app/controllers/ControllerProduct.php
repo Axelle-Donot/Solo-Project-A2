@@ -25,4 +25,7 @@ class ControllerProduct {
       require(File::getApp(array("views", "view.php")));
     }
   }
+
+
 }
+?>

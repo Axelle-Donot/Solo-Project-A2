@@ -113,15 +113,16 @@ html {
 	display: flex;
 	flex-direction: row;
 	text-align: center;
-	justify-content: space-evenly;
+	justify-content: space-around;
 	flex-wrap: wrap;
 }
 
 div.produits > div {
 	width: 40%;
 	background-color: #E7E7E7;
-	padding: 10px;
-	margin: 15px;
+	padding-top : 10px;
+	margin: 5px;
+	margin-bottom: 15px;
 }
 
 div.produits > div > a > img{
@@ -174,12 +175,31 @@ div.accueil > a > p {
 	color: white;
 }
 
-div.image > img{
-	width: 80%;
+div.detail > div > img{
+	width: 70%;
 	margin-bottom: 20px;
+}	
+	
+div.detail > div {
+	text-align: center;
 }
 
-div.image {
-	text-align: center;
+div.detail > h2{
+	margin-left: 15%;
+}
+
+div.detail > p{
+	margin-left: 15%;
+}
+
+div.detail > a {
+	color: black;
+	text-decoration: none;
+	margin-left: 15%;
+	font-size: 30px;
+	border: solid 4px black;
+	border-radius: 30px;
+	margin-top: 5%;
+	padding: 10px;
 }
 

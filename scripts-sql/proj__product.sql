@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 27 nov. 2021 à 14:09
+-- Généré le : jeu. 02 déc. 2021 à 08:49
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.10
 
@@ -19,6 +19,12 @@ SET time_zone = "+00:00";
 
 --
 -- Base de données : `danom`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `proj__product`
 --
 
 --
