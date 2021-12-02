@@ -26,6 +26,11 @@ class ModelUser extends Model {
 (1, 'Yova', 'moi', 'Dano', 'Matthieu', 'matthieu.dano@etu.umontpellier.fr', '0763406425')";
   }
 
+  public static function alreadyExist(string $login): bool {
+    return true;
+  }
+
+
   // --- GETTERS ---
 
   public function get($nom_attribut) {

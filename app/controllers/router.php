@@ -21,3 +21,7 @@ if (class_exists($controller_class)) {
   $view = "error";
   require_once File::getApp(array("views", "view.php"));
 }
+
+$_SESSION["isLogged"] = false;
+$_SESSION["cart"] = array("1", "2", "3");
+var_dump($_SESSION);

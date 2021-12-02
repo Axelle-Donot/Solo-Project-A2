@@ -18,7 +18,6 @@ class ControllerUser {
   }
 
   public static function connected() {
-
   }
 
   public static function register() {
