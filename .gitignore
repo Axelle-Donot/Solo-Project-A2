@@ -100,3 +100,4 @@ modules.xml
 Config.php
 Conf.php
 ._*
+.nfs.*

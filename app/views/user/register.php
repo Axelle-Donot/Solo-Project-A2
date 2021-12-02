@@ -4,6 +4,16 @@
     <div class="content-popup">
       <form action="?a=registered&c=user" method="post">
         <div class="mb-3">
+          <label for="lastname" class="form-label">Nom&nbsp;:</label>
+          <input id="lastname" class="form-control" type="text" placeholder="Entrer votre nom de famille" name="lastname"
+                 required>
+        </div>
+        <div class="mb-3">
+          <label for="firstname" class="form-label">Prénom&nbsp;:</label>
+          <input id="firstname" class="form-control" type="text" placeholder="Entrer votre prénom" name="firstname"
+                 required>
+        </div>
+        <div class="mb-3">
           <label for="user" class="form-label">Nom d'utilisateur&nbsp;:</label>
           <input id="user" class="form-control" type="text" placeholder="Entrer le nom d'utilisateur" name="username"
                  required>

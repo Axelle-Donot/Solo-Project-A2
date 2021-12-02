@@ -21,6 +21,11 @@ class ModelUser extends Model {
     }
   }
 
+  public static function create(string $login, string $passwd): bool {
+    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`, `phone`) VALUES
+(1, 'Yova', 'moi', 'Dano', 'Matthieu', 'matthieu.dano@etu.umontpellier.fr', '0763406425')";
+  }
+
   // --- GETTERS ---
 
   public function get($nom_attribut) {

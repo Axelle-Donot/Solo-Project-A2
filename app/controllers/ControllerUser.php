@@ -28,7 +28,7 @@ class ControllerUser {
   }
 
   public static function registered() {
-
+    //ModelUser::create($_POST["username-login"], $_POST["password-login"]);
   }
 
   public static function showCart() {
