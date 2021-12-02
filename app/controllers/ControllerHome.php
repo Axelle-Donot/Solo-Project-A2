@@ -9,7 +9,4 @@ class ControllerHome {
     require_once File::getApp(array("views", "view.php"));
   }
 
-  
 }
-
-?>
