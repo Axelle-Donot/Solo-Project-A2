@@ -127,7 +127,7 @@ CREATE TABLE `proj__user` (
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `mail` varchar(64) NOT NULL,
-  `phone` varchar(15) NOT NULL
+  `phone` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
