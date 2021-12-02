@@ -41,6 +41,10 @@
     <div>
       <a href="?a=readAll&c=user">Utilisateurs</a>
     </div>
+
+    <div>
+      <a href="?a=goContact&c=home">Contact</a>
+    </div>
   </nav>
 
   <blockquote>
