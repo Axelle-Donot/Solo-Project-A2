@@ -16,7 +16,5 @@ class ControllerCart_item {
     $view = "list.php";
     require File::getApp(array("views", "view.php"));
   }
-
-
 }
 ?>
