@@ -4,8 +4,8 @@
     <div class="content-popup">
       <form action="?a=connected&c=user" method="post">
         <div class="mb-3">
-          <label for="username-login" class="form-label">Nom d'utilisateur&nbsp;:</label>
-          <input id="username-login" class="form-control" type="text" name="username" placeholder="Jean-michel34"
+          <label for="mail-login" class="form-label">Nom d'utilisateur&nbsp;:</label>
+          <input id="mail-login" class="form-control" type="text" name="mail" placeholder="jean-michel34@example.com"
                  required>
         </div>
         <div class="mb-3">

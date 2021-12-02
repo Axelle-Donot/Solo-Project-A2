@@ -21,13 +21,43 @@ class ModelUser extends Model {
     }
   }
 
-  public static function create(string $login, string $passwd): bool {
-    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`, `phone`) VALUES
-(1, 'Yova', 'moi', 'Dano', 'Matthieu', 'matthieu.dano@etu.umontpellier.fr', '0763406425')";
+  public static function create(array $data): bool {
+    $password_hashed = Security::hacher($data[]);
+    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`) VALUES
+(':username_tag', ':password_tag', ':lastname_tag', ':firstname_tag', ':mail_tag');";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $req_prep->execute(array("username_tag" => $data["username"]));
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+    }
+    return false;
   }
 
-  public static function alreadyExist(string $login): bool {
-    return true;
+  public static function checkPassword(string $mail, string $password): bool {
+    $password_hashed = Security::hacher($password);
+    $sql = "SELECT COUNT(user_id) AS nbOfAccounts FROM `proj__user` WHERE `mail`=':mail_tag' AND `password`=':password_tag';";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $req_prep->execute(array("mail_tag" => $mail, "password_tag" => $password_hashed));
+      $nbOfAccounts = $req_prep->fetch(PDO::FETCH_ASSOC)["nbOfAccounts"];
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) echo $e->getMessage();
+    }
+
+    return ($nbOfAccounts ?? 0) == 1;
+  }
+
+  public static function getUserIdByMail(string $mail): string {
+    $sql = "SELECT `user_id` FROM `proj__user` WHERE `mail`=':mail_tag';";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $req_prep->execute(array("mail_tag" => $mail));
+      $user_id = $req_prep->fetch(PDO::FETCH_ASSOC)["user_id"];
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) echo $e->getMessage();
+    }
+    return $user_id;
   }
 
 

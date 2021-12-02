@@ -1,1 +1,1 @@
-<h2>Erreur 404&nbsp;: La page que vous demandez, n'existe pas...</h2>
+<p class="text-center fs-5"><?= $details ?? "Erreur 404 : La page que vous demandez n'existe pas..." ?></p>
