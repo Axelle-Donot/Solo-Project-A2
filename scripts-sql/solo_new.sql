@@ -109,8 +109,8 @@ CREATE TABLE `proj__shopping_cart` (
 
 CREATE TABLE `proj__tag` (
   `tag_id` int(11) NOT NULL,
-  `name` varchar(32) CHARACTER SET latin1 NOT NULL,
-  `description` varchar(256) CHARACTER SET latin1 DEFAULT NULL
+  `name` varchar(32) NOT NULL,
+  `description` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -208,7 +208,9 @@ ALTER TABLE `proj__tag`
 --
 ALTER TABLE `proj__user`
   ADD PRIMARY KEY (`user_id`),
-  ADD KEY `fk_profile_photo_id_user` (`profile_photo_id`);
+  ADD KEY `fk_profile_photo_id_user` (`profile_photo_id`),
+  ADD UNIQUE KEY `unique_username_user` (`username`),
+  ADD UNIQUE KEY `unique_mail_user` (`mail`);
 
 -- --------------------------------------------------------
 
