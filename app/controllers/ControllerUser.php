@@ -14,6 +14,7 @@ class ControllerUser {
   public static function login() {
     $page_title = 'Connexion';
     $view = 'login';
+    ModelUser::create($_POST["username-login"], $_POST["password-login"]);
     require_once File::getApp(array("views", "view.php"));
   }
 
