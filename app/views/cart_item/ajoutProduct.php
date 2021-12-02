@@ -1,5 +1,3 @@
 <?php
-        echo "ajout du produit dans votre panier !";
-        require File::getApp(array("views/shopping_cart","list.php"));  //Montrer à matéo 
-        
+        echo "Ajout du produit dans votre panier !";
 ?>

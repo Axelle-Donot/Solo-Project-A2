@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 27 nov. 2021 à 14:09
+-- Généré le : jeu. 02 déc. 2021 à 08:49
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.10
 
@@ -27,16 +27,6 @@ SET time_zone = "+00:00";
 -- Structure de la table `proj__product`
 --
 
-CREATE TABLE `proj__product` (
-  `product_id` int(11) NOT NULL,
-  `tag_id` int(11) DEFAULT NULL,
-  `discount_id` int(11) DEFAULT NULL,
-  `name` varchar(32) NOT NULL,
-  `description` varchar(256) DEFAULT NULL,
-  `product_picture_id` int(11) DEFAULT NULL,
-  `price` double NOT NULL,
-  `rating` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `proj__product`
