@@ -74,7 +74,7 @@ h3 {
 }
 
 fieldset {
-	background-color: rgb(236, 236, 236);
+	background-color: #E7E7E7;
 }
 
 .link-button {
@@ -202,4 +202,54 @@ div.detail > a {
 	margin-top: 5%;
 	padding: 10px;
 }
+
+div.address {
+	text-align: center;
+}
+
+div.mail {
+	background-color: #E7E7E7;
+
+}
+div.mail > form > fieldset {
+	display: flex;
+	flex-direction: column;
+}
+
+div.mail > form > fieldset > input{
+	display: flex;
+	justify-content: center;
+	width: 80%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.mail > form > fieldset > label{
+	display: flex;
+	justify-content: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.mail > form > fieldset > TEXTAREA{
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.boutons > input {
+	background-color: whitesmoke;
+	font-size: 15px;
+	border: solid 4px black;
+	border-radius: 30px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.boutons {
+	display: flex;
+	justify-content: center;
+	
+}
+
+
 
