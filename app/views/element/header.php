@@ -10,7 +10,7 @@
     <div class="right-header-top">
       <div class="account">
         <div class="login">
-          <i class="fas fa-user"></i>
+          <i class="fas fa-user m-1"></i>
           <a href="?a=login&c=user" class="login-a">Se connecter</a>
         </div>
         <span>|</span>
@@ -21,7 +21,7 @@
       <div class="panier">
         <div class="cart">
           <a href="?a=showCart&c=user">
-            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-shopping-cart m-1"></i>
             Panier
           </a>
         </div>
