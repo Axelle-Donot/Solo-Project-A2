@@ -4,13 +4,13 @@
     <div class="content-popup">
       <form action="?a=connected&c=user" method="post">
         <div class="mb-3">
-          <label for="mail-login" class="form-label">Nom d'utilisateur&nbsp;:</label>
-          <input id="mail-login" class="form-control" type="text" name="mail" placeholder="jean-michel34@example.com"
+          <label for="mail" class="form-label">Adresse e-mail&nbsp;:</label>
+          <input id="mail" class="form-control" type="text" name="mail-login" placeholder="jean-michel34@example.com"
                  required>
         </div>
         <div class="mb-3">
-          <label for="password-login" class="form-label">Mot de passe&nbsp;:</label>
-          <input id="password-login" class="form-control" type="password" name="password" placeholder="********"
+          <label for="password" class="form-label">Mot de passe&nbsp;:</label>
+          <input id="password" class="form-control" type="password" name="password-login" placeholder="********"
                  required>
         </div>
         <input type="submit" class="btn btn-primary" value="Login">

@@ -22,21 +22,29 @@ class ModelUser extends Model {
   }
 
   public static function create(array $data): bool {
-    $password_hashed = Security::hacher($data[]);
-    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`) VALUES
-(':username_tag', ':password_tag', ':lastname_tag', ':firstname_tag', ':mail_tag');";
+    var_dump($data);
+    $password_hashed = Security::hacher($data['password']);
+    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`)
+VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag);";
     try {
       $req_prep = self::getPdo()->prepare($sql);
-      $req_prep->execute(array("username_tag" => $data["username"]));
+      $state = $req_prep->execute(array(
+        "lastname_tag" => $data["lastname"],
+        "firstname_tag" => $data["firstname"],
+        "username_tag" => $data["username"],
+        "mail_tag" => $data["mail"],
+        "password_tag" => $password_hashed
+      ));
     } catch (PDOException $e) {
-      echo $e->getMessage();
+      if (Conf::getDebug()) echo $e->getMessage();
+      return false;
     }
-    return false;
+    return $state;
   }
 
   public static function checkPassword(string $mail, string $password): bool {
     $password_hashed = Security::hacher($password);
-    $sql = "SELECT COUNT(user_id) AS nbOfAccounts FROM `proj__user` WHERE `mail`=':mail_tag' AND `password`=':password_tag';";
+    $sql = "SELECT COUNT(user_id) AS nbOfAccounts FROM `proj__user` WHERE `mail`=:mail_tag AND `password`=:password_tag;";
     try {
       $req_prep = self::getPdo()->prepare($sql);
       $req_prep->execute(array("mail_tag" => $mail, "password_tag" => $password_hashed));
@@ -48,18 +56,21 @@ class ModelUser extends Model {
     return ($nbOfAccounts ?? 0) == 1;
   }
 
-  public static function getUserIdByMail(string $mail): string {
-    $sql = "SELECT `user_id` FROM `proj__user` WHERE `mail`=':mail_tag';";
+  public static function getUserIdByMail(string $mail): string|bool {
+    $sql = "SELECT `user_id` FROM `proj__user` WHERE `mail`=:mail_tag;";
     try {
       $req_prep = self::getPdo()->prepare($sql);
-      $req_prep->execute(array("mail_tag" => $mail));
-      $user_id = $req_prep->fetch(PDO::FETCH_ASSOC)["user_id"];
+      $state = $req_prep->execute(array("mail_tag" => $mail));
+      $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
+      $userId = $req_prep->fetch()->get('user_id');
     } catch (PDOException $e) {
       if (Conf::getDebug()) echo $e->getMessage();
+      return false;
     }
-    return $user_id;
+    if (!$state)
+      return false;
+    return $userId;
   }
-
 
   // --- GETTERS ---
 
@@ -67,6 +78,15 @@ class ModelUser extends Model {
     if (property_exists($this, $nom_attribut))
       return $this->$nom_attribut;
     return false;
+  }
+
+  public function getImage(): string {
+    return ModelImages::getBlob($this->profile_photo_id);
+  }
+
+  public function getAdresse(): string {
+    $sql = "";
+    return "bla";
   }
 
   // --- SETTERS ---

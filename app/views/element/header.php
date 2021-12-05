@@ -9,6 +9,7 @@
     </div>
     <div class="right-header-top">
       <div class="account">
+        <?php if (!Session::isConnected()) { ?>
         <div class="login">
           <i class="fas fa-user"></i>
           <a href="?a=login&c=user" class="login-a">Se connecter</a>
@@ -17,6 +18,12 @@
         <div class="register">
           <a href="?a=register&c=user">S'inscrire</a>
         </div>
+        <?php } else { ?>
+          <div class="login">
+            <i class="fas fa-user"></i>
+            <a href="?a=profile&c=user" class="login-a">Profil</a>
+          </div>
+        <?php } ?>
       </div>
       <div class="panier">
         <div class="cart">

@@ -2,6 +2,9 @@
 require_once File::getApp(array("lib", "Conf.php"));
 
 class Model {
+  /**
+   * @var PDO
+   */
   private static $pdo;
 
   private static function Init() {

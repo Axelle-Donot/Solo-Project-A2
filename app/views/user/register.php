@@ -24,7 +24,7 @@
           <label for="mail" class="form-label">Adresse email&nbsp;:</label>
           <input id="mail" class="form-control" type="email" placeholder="Entrer votre mail" name="mail" required>
           <label for="mail-conf" class="form-label"></label>
-          <input id="mail-conf" class="form-control" type="email" placeholder="Confirmation de votre mail" name="mail"
+          <input id="mail-conf" class="form-control" type="email" placeholder="Confirmation de votre mail" name="mail-conf"
                  required>
         </div>
 
@@ -34,7 +34,7 @@
                  required>
           <label for="password-conf" class="form-label"></label>
           <input id="password-conf" class="form-control" type="password" placeholder="Confirmation du mot de passe"
-                 name="password" required>
+                 name="password-conf" required>
         </div>
 
         <input type="submit" class="btn btn-primary" value="Envoyer">

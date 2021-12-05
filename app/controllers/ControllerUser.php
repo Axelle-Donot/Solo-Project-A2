@@ -11,21 +11,38 @@ class ControllerUser extends Controller {
     require_once File::getApp(array("views", "view.php"));
   }
 
+  public static function profile(): void {
+    if (!Session::isConnected())
+      ControllerHome::goHome();
+    else {
+      $user = ModelUser::select(Session::getUserId());
+      $page_title = "Profil utilisateur";
+      $view = "profile";
+      require_once File::getApp(array("views", "view.php"));
+    }
+  }
+
   public static function login(): void {
-    $page_title = 'Connexion';
-    $view = 'login';
-    require_once File::getApp(array("views", "view.php"));
+    if (Session::isConnected())
+      ControllerHome::goHome();
+    else {
+      $page_title = 'Connexion';
+      $view = 'login';
+      require_once File::getApp(array("views", "view.php"));
+    }
   }
 
   public static function connected(): void {
-    if (isset($_POST["mail-login"], $_POST["password-login"])) {
+    if (Session::isConnected())
+      ControllerHome::goHome();
+    else if (isset($_POST["mail-login"], $_POST["password-login"])) {
       // On est sûr d'avoir un formulaire valide
       $mail = htmlspecialchars($_POST["mail-login"]);
       $password = htmlspecialchars($_POST["password-login"]);
 
       if (ModelUser::checkPassword($mail, $password)) {
-        $_SESSION["isLogged"] = true;
-        $_SESSION["user_id"] = ModelUser::getUserIdByMail($mail);
+        Session::changeToConnected();
+        Session::updateUserId(ModelUser::getUserIdByMail($mail));
         ControllerHome::goHome();
       } else {
         self::login();
@@ -38,32 +55,52 @@ class ControllerUser extends Controller {
   }
 
   public static function register(): void {
-    $page_title = 'Inscription';
-    $view = 'register';
-    require_once File::getApp(array("views", "view.php"));
+    if (Session::isConnected())
+      ControllerHome::goHome();
+    else {
+      $page_title = 'Inscription';
+      $view = 'register';
+      require_once File::getApp(array("views", "view.php"));
+    }
   }
 
   public static function registered(): void {
-    if (isset($_POST["lastname"], $_POST["firstname"], $_POST["username"], $_POST["mail"], $_POST["password"])) {
+    if (Session::isConnected())
+      ControllerHome::goHome();
+    else if (isset($_POST["lastname"], $_POST["firstname"], $_POST["username"], $_POST["mail"], $_POST["password"])) {
+      // Validité de la confirmation du mdp
       if ($_POST["mail"] != $_POST["mail-conf"]) {
         self::register();
-        parent::error('Inscription', 'Le mail de confirmation doit être le même que le mail.');
+        parent::error('Inscription', "L'adresse mail de confirmation doit être le même que l'adresse mail.");
       } else if ($_POST["password"] != $_POST["password-conf"]) {
         self::register();
-        parent::error('Inscription', 'Le mot de passe de confirmation doit être le même que le mot de passe.');
+        parent::error('Inscription', "Le mot de passe de confirmation doit être le même que le mot de passe.");
       }
-      // On est sûr d'avoir un formulaire valide
-      $lastname = htmlspecialchars($_POST["lastname"]);
-      $firstname = htmlspecialchars($_POST["firstname"]);
-      $username = htmlspecialchars($_POST["username"]);
-      $mail = htmlspecialchars($_POST["mail"]);
-      $password = htmlspecialchars($_POST["password"]);
-
-      ModelUser::create($_POST["username-login"], $_POST["password-login"]);
-      ControllerHome::goHome();
+      // Validité de l'adresse mail
+      if (!filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL)) {
+        self::register();
+        parent::error('Inscription', "L'adresse mail est invalide.");
+      }
+      // On est maintenant sûr d'avoir un formulaire valide
+      $data = array(
+        "lastname" => htmlspecialchars($_POST["lastname"]),
+        "firstname" => htmlspecialchars($_POST["firstname"]),
+        "username" => htmlspecialchars($_POST["username"]),
+        "mail" => htmlspecialchars($_POST["mail"]),
+        "password" => htmlspecialchars($_POST["password"])
+      );
+      if (ModelUser::create($data)) {
+        Session::changeToConnected();
+        echo ModelUser::getUserIdByMail($data['mail']);
+        Session::updateUserId(ModelUser::getUserIdByMail($data['mail']));
+        ControllerHome::goHome();
+      } else {
+        self::register();
+        parent::error('Inscription', "Problème dans l'inscription.");
+      }
     } else {
       self::register();
-      parent::error('Inscription', 'Formulaire d\'inscription invalide');
+      parent::error('Inscription', "Formulaire d'inscription invalide");
     }
   }
 
