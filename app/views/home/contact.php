@@ -1,10 +1,10 @@
 <div class="mail">
 <form action="?a=envoiemail&c=home" method="post">
 	<fieldset>
-		<label for="subject">Objet du message:</label>
+		<label for="object">Objet du message:</label>
 		<input id="object" name="objet" placeholder="J'aime vos sabres"/>
 		<label for="commentaire">Contenu&nbsp;:</label>
-		<TEXTAREA id="commentaire" name="commantaireUser" rows=4 cols=40 placeholder="Saisissez votre texte"></TEXTAREA>
+		<textarea id="commentaire" name="commentaireUser" rows=4 cols=40 placeholder="Saisissez votre texte"></textarea>
 	</fieldset>
 	<p class="boutons">
 		<input type="submit" value="Envoyer" />

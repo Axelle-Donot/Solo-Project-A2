@@ -24,21 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `proj__user`
---
-
-CREATE TABLE `proj__user` (
-  `user_id` int(11) NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `profile_photo_id` int(11) DEFAULT NULL,
-  `password` varchar(64) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `mail` varchar(64) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Déchargement des données de la table `proj__user`
 --
 
