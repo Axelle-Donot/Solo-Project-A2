@@ -14,3 +14,6 @@
   };
   ?>
 </div>
+<?php
+  echo "<a href='?a=create&c=product' > Créer un produit </a>";  // pour les admins 
+?>

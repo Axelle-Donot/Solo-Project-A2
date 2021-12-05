@@ -8,7 +8,7 @@ class ControllerProduct {
     $page_title = 'Boutique';
     $view = 'list';
     $tab_prod = ModelProduct::selectAll();
-    require(File::getApp(array("views", "view.php")));
+    require File::getApp(array("views", "view.php"));
   }
 
   public static function read(){
@@ -26,6 +26,44 @@ class ControllerProduct {
     }
   }
 
+  public static function create(){
+    $page_title = 'Créer un produit';
+    $view = 'create';
+    require File::getApp(array("views","view.php"));
+  }
+
+  public static function created(){
+    $tag = ($_POST['tag']);
+    $discount = ($_POST['discount']);
+    $name = ($_POST['name']);
+    $desc = ($_POST['description']);
+    $price = ($_POST['price']);
+
+  }
+
+  public static function delete(){
+    $value = ModelProduct::select($_GET['id']);
+    ModelProduct::delete($value);
+    ControllerProduct::readAll();
+  }
+
+  public static function update(){
+
+    $value = ModelProduct::select($_GET['id']);
+
+    $page_title = 'Modifier un produit';
+    $view = 'update';
+    require File::getApp(array("views","view.php"));
+  }
+
+  public static function updated(){
+    $tag = ($_POST['tag']);
+    $discount = ($_POST['discount']);
+    $name = ($_POST['name']);
+    $desc = ($_POST['description']);
+    $price = ($_POST['price']);
+
+  }
 
 }
 ?>
