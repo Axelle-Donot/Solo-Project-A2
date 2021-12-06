@@ -68,8 +68,7 @@ CREATE TABLE `proj__discount` (
 CREATE TABLE `proj__ordered_product` (
   `ordered_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `total_price` double NOT NULL
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -97,8 +96,7 @@ CREATE TABLE `proj__product` (
 
 CREATE TABLE `proj__shopping_cart` (
   `cart_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `total_price` double NOT NULL
+  `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -127,7 +125,9 @@ CREATE TABLE `proj__user` (
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `mail` varchar(64) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL
+  `phone` varchar(15) DEFAULT NULL,
+  `role` enum('user', 'admin') DEFAULT 'user',
+  `nonce` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
