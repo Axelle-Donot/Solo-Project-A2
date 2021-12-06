@@ -76,31 +76,5 @@ class Model {
 
     return $el ?? false;
   }
-
-  public static function ajoutProduitPanier($primaryValue)
-  {
-    $table_name = static::$object;
-    $class_name = "Model" . ucfirst($table_name);
-    $pkey = static::$primary;   //cart_id
-    
-
-    //$sql = "INSERT INTO proj__" . $table_name . " VALUES " . "(1,":tag",1)";
-    $sql = "SELECT * FROM proj_produit";
-    try {
-
-      $db = self::getPdo();
-      $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $primaryValue));
-      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-      $el = $rep->fetch();
-    } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
-      return false;
-    }
-
-    return $el ?? false;
-  }
 }
 
