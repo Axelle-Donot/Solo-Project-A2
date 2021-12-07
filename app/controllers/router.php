@@ -1,7 +1,7 @@
 <?php
 require_once File::getApp(array("controllers", "Controller.php"));
 
-$action = $_GET['a'] ?? "goHome";
+$action = $_GET['a'] ?? "home";
 $controller = $_GET['c'] ?? "home";
 $controller_class = "Controller" . ucfirst($controller);
 

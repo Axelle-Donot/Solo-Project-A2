@@ -27,7 +27,7 @@
       </div>
       <div class="panier">
         <div class="cart">
-          <a href="?a=showCart&c=cart_item">
+          <a href="?a=read&c=cart">
             <i class="fas fa-shopping-cart"></i>
             Panier
           </a>
@@ -50,7 +50,7 @@
     </div>
 
     <div>
-      <a href="?a=goContact&c=home">Contact</a>
+      <a href="?a=contact">Contact</a>
     </div>
   </nav>
 
