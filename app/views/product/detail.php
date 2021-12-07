@@ -5,6 +5,6 @@ echo "<div><img  src='{$value->getImage()}' alt='img du produit {$value->get('na
 echo '<p>Description ' . $value->get("description") . '</p>';
 echo '<p>Prix ' . $value->get("price") . '€</p>';
 $id = $value->get('product_id');
-echo "<a href='?a=add&c=cart_item&id=$id' >Ajouter au panier</a>";
-echo '</div>'
-?>
+echo "<a href='?a=add&c=cart_item&id=$id'>Ajouter au panier</a>";
+
+

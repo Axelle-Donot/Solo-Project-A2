@@ -103,10 +103,4 @@ class ControllerUser extends Controller {
       parent::error('Inscription', "Formulaire d'inscription invalide");
     }
   }
-
-  public static function showCart(): void {
-    $page_title = 'Votre panier';
-    $view = 'cart';
-    require_once File::getApp(array("views", "view.php"));
-  }
 }

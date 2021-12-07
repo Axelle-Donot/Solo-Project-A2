@@ -27,7 +27,7 @@
       </div>
       <div class="panier">
         <div class="cart">
-          <a href="?a=showCart&c=user">
+          <a href="?a=showCart&c=cart_item">
             <i class="fas fa-shopping-cart"></i>
             Panier
           </a>
