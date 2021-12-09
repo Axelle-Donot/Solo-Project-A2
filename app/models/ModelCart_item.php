@@ -9,6 +9,9 @@ class ModelCart_item extends Model {
   protected static $object = "cart";
   protected static $primary = "cart_id";
 
+  const ONE = 0;
+  const MORE = 1;
+
   public function __construct($id = NULL, $pid = NULL, $quantity = NULL) {
     if (!is_null($id) && !is_null($pid) && !is_null($quantity)) {
       $this->cart_id = $id;
@@ -16,8 +19,6 @@ class ModelCart_item extends Model {
       $this->quantity = $quantity;
     }
   }
-
-  // --- GETTERS ---
 
   public function getCartId() {
     return $this->cart_id;
@@ -31,8 +32,6 @@ class ModelCart_item extends Model {
     return $this->quantity;
   }
 
-  // --- SETTERS ---
-
   public function setCartId($id) {
     $this->cart_id = $id;
   }
@@ -41,23 +40,8 @@ class ModelCart_item extends Model {
     $this->product_id = $pid;
   }
 
-  public static function getQuantityProduct($product_id): int {
-    $sql = "SELECT quantity FROM proj__cart_item WHERE product_id=:p";
-    try {
-      $req_prep = self::getPdo()->prepare($sql);
-      $state = $req_prep->execute(array("p" => $product_id));
-    } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
-      return false;
-    }
-    $q = (int)$req_prep->fetch()['quantity'];
-    return $q;
-  }
-
-  public static function alreadyInCart($product_id): bool {
-    $sql = "SELECT * FROM proj__cart_item WHERE product_id =:p";
+  public static function alreadyInCart($product_id) {
+    $sql = "SELECT COUNT(*) FROM proj__cart_item WHERE product_id =:p";
     try {
       $req_prep = self::getPdo()->prepare($sql);
       $state = $req_prep->execute(array("p" => $product_id));
@@ -73,9 +57,26 @@ class ModelCart_item extends Model {
     return true;
   }
 
+  public static function getQuantityProduct($product_id) {
+    $sql = "SELECT quantity FROM proj__cart_item WHERE product_id =:p";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $state = $req_prep->execute(array("p" => $product_id));
+      if ($state && $req_prep->fetch() > 1) {
+        return MORE;
+      }
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+    return ONE;
+  }
+
   // On suppose que l'on peut modifier uniquement la quantité dans le panier et pas depuis le detail du produit
-  public static function addProduct($primaryValue): bool {
-    $inCart = self::alreadyInCart($primaryValue);
+  public static function addProduct($product_id, $user_id): bool {
+    $inCart = self::alreadyInCart($product_id);
     // S'il est déjà dans le panier
     if ($inCart) {
       $sql = "UPDATE proj__cart_item SET quantity =:q WHERE cart_id =:c AND product_id =:p";
@@ -87,14 +88,14 @@ class ModelCart_item extends Model {
       $req_prep = self::getPdo()->prepare($sql);
       if ($inCart) {
         $state = $req_prep->execute(array(
-          "q" => ModelCart_item::getQuantityProduct($primaryValue) + 1,
-          "c" => ModelUser::getCartIdByUserId(),
-          "p" => $primaryValue
+          "q" => ModelCart_item::getQuantityProduct($product_id) + 1,
+          "c" => ModelUser::getCartIdByUserId($user_id),
+          "p" => $product_id
         ));
       } else {
         $state = $req_prep->execute(array(
-          "c" => ModelUser::getCartIdByUserId(),
-          "p" => $primaryValue
+          "c" => ModelUser::getCartIdByUserId($user_id),
+          "p" => $product_id
         ));
       }
     } catch (PDOException $e) {
@@ -106,13 +107,31 @@ class ModelCart_item extends Model {
     return $state;
   }
 
+  public static function removeProduct($id, string $getUserId) {
+    if ()
+      $sql = "DELETE FROM proj__cart_item WHERE cart_id =:c AND product_id =:p";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $state = $req_prep->execute(array(
+        "c" => ModelUser::getCartIdByUserId($getUserId),
+        "p" => $id
+      ));
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+    return $state;
+
+  }
+
   public static function getAllItems($cart): array {
-    $sql = "SELECT product_id, quantity FROM proj__cart_item WHERE cart_id =:c";
+    $sql = "SELECT product_id, quantity FROM proj__cart_item WHERE cart_id=:c";
     try {
       $req_prep = self::getPdo()->prepare($sql);
       $req_prep->execute(array("c" => $cart));
-      $req_prep->setFetchMode(PDO::FETCH_CLASS, "ModelCart_item");
-      $items = $req_prep->fetchAll();
+      $items = $req_prep->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
       if (Conf::getDebug()) {
         echo $e->getMessage();
@@ -122,11 +141,4 @@ class ModelCart_item extends Model {
     return $items;
   }
 
-  public static function toStringItems($cart_id) {
-    $items = self::getAllItems($cart_id);
-    $product = array();
-    $quantity = array();
-    $cart = array($product, $quantity);
-
-  }
 }

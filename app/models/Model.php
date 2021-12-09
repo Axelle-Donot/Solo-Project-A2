@@ -46,7 +46,6 @@ class Model
             $rep = $db->query($sql);
             $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab = $rep->fetchAll();
-
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $e->getMessage();

@@ -6,7 +6,7 @@ class ControllerCart extends Controller {
 
   public static function read() {
     if (Session::isConnected()) {
-      $tab_items = ModelCart_item::getAllItems(ModelUser::getCartIdByUserId());
+      $tab_items = ModelCart_item::getAllItems(ModelUser::getCartIdByUserId(Session::getUserId()));
     } else {
       $tab_items = Session::getCartItems();
     }
@@ -17,7 +17,7 @@ class ControllerCart extends Controller {
 
   public static function add() {
     if (Session::isConnected()) {
-      $prod = ModelCart_item::addProduct($_GET['id']);
+      $prod = ModelCart_item::addProduct($_GET['id'], Session::getUserId());
     } else {
       Session::addProduct($_GET['id']);
     }
@@ -26,7 +26,7 @@ class ControllerCart extends Controller {
 
   public static function delete() {
     if (Session::isConnected()) {
-      //$prod = ModelCart_item::removeProduct($_GET['id']);
+      $prod = ModelCart_item::removeProduct($_GET['id'], Session::getUserId());
     } else {
       Session::removeProduct($_GET['id']);
     }

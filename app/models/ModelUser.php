@@ -70,11 +70,11 @@ class ModelUser extends Model {
     return $userId;
   }
 
-  public static function getCartIdByUserId() {
+  public static function getCartIdByUserId($user_id) {
     $sql = "SELECT cart_id FROM proj__user u JOIN proj__shopping_cart s ON u.user_id = s.customer_id WHERE user_id=:userid_tag;";
     try {
       $req_prep = self::getPdo()->prepare($sql);
-      $state = $req_prep->execute(array("userid_tag" => Session::getUserId()));
+      $state = $req_prep->execute(array("userid_tag" => $user_id));
       $cart_id = $req_prep->fetch(PDO::FETCH_ASSOC)['cart_id'];
     } catch (PDOException $e) {
       if (Conf::getDebug()) echo $e->getMessage();

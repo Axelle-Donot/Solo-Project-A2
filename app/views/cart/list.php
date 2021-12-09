@@ -1,7 +1,7 @@
 <h2>Contenu de votre panier&nbsp;:</h2>
-<?php if (empty(Session::getCartItems())) { ?>
+<?php /*if (empty(Session::getCartItems())) { */?><!--
 <div>Votre panier est vide c'est bien dommage, un petit tour en <a href="?a=readAll&c=product">Boutique</a>&nbsp;?</div>
-<?php } else { ?>
+--><?php /*} else { */?>
   <div>
     <?php
     $total_price = 0;
@@ -25,4 +25,4 @@
     ?>
     <h4 class="my-4"> Prix total&nbsp;: <?= $total_price ?>€</h4>
   </div>
-<?php } ?>
+<?php /*} */?>

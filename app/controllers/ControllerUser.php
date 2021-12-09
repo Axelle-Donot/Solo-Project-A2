@@ -13,7 +13,7 @@ class ControllerUser extends Controller {
 
   public static function profile(): void {
     if (!Session::isConnected())
-      ControllerHome::goHome();
+      ControllerHome::home();
     else {
       $user = ModelUser::select(Session::getUserId());
       $page_title = "Profil utilisateur";
@@ -24,7 +24,7 @@ class ControllerUser extends Controller {
 
   public static function login(): void {
     if (Session::isConnected())
-      ControllerHome::goHome();
+      ControllerHome::home();
     else {
       $page_title = 'Connexion';
       $view = 'login';
@@ -34,7 +34,7 @@ class ControllerUser extends Controller {
 
   public static function connected(): void {
     if (Session::isConnected())
-      ControllerHome::goHome();
+      ControllerHome::home();
     else if (isset($_POST["mail-login"], $_POST["password-login"])) {
       // On est sûr d'avoir un formulaire valide
       $mail = htmlspecialchars($_POST["mail-login"]);
@@ -43,7 +43,7 @@ class ControllerUser extends Controller {
       if (ModelUser::checkPassword($mail, $password)) {
         Session::changeToConnected();
         Session::updateUserId(ModelUser::getUserIdByMail($mail));
-        ControllerHome::goHome();
+        ControllerHome::home();
       } else {
         self::login();
         parent::error('Connexion', 'Votre compte n\'existe pas');
@@ -56,7 +56,7 @@ class ControllerUser extends Controller {
 
   public static function register(): void {
     if (Session::isConnected())
-      ControllerHome::goHome();
+      ControllerHome::home();
     else {
       $page_title = 'Inscription';
       $view = 'register';
@@ -66,7 +66,7 @@ class ControllerUser extends Controller {
 
   public static function registered(): void {
     if (Session::isConnected())
-      ControllerHome::goHome();
+      ControllerHome::home();
     else if (isset($_POST["lastname"], $_POST["firstname"], $_POST["username"], $_POST["mail"], $_POST["password"])) {
       // Validité de la confirmation du mdp
       if ($_POST["mail"] != $_POST["mail-conf"]) {
@@ -93,7 +93,7 @@ class ControllerUser extends Controller {
         Session::changeToConnected();
         echo ModelUser::getUserIdByMail($data['mail']);
         Session::updateUserId(ModelUser::getUserIdByMail($data['mail']));
-        ControllerHome::goHome();
+        ControllerHome::home();
       } else {
         self::register();
         parent::error('Inscription', "Problème dans l'inscription.");
