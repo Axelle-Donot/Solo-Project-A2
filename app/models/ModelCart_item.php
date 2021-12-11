@@ -49,15 +49,18 @@ class ModelCart_item extends Model
         $this->product_id = $pid;
     }
 
-    public static function getQuantityProduct($product_id)
+    public static function getQuantityProduct($product_id, $cart_id)
     {
-        $sql = "SELECT quantity FROM proj__cart_item WHERE product_id =:p";
+        $sql = "SELECT quantity FROM proj__cart_item WHERE product_id =:p AND cart_id =:c";
         try {
             $req_prep = self::getPdo()->prepare($sql);
-            $req_prep->execute(array("p" => $product_id));
-            //Requête valide et
-            if ($req_prep->fetch(PDO::FETCH_OBJ) >= 1) {
-                return $req_prep->fetch();
+            $req_prep->execute(array(
+                "p" => $product_id,
+                "c" => $cart_id
+            ));
+            $result = $req_prep->fetch();
+            if ($result['quantity'] >= 1) {
+                return $result['quantity'];
             }
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
@@ -70,7 +73,8 @@ class ModelCart_item extends Model
 
     public static function addProduct($product_id, $user_id)
     {
-        $quantity = self::getQuantityProduct($product_id);
+        $cart_id = ModelUser::getCartIdByUserId($user_id);
+        $quantity = self::getQuantityProduct($product_id, $cart_id);
         // S'il est déjà dans le panier
         if ($quantity >= 1) {
             $sql = "UPDATE proj__cart_item SET quantity =:q WHERE cart_id =:c AND product_id =:p";
@@ -83,8 +87,8 @@ class ModelCart_item extends Model
             $req_prep = self::getPdo()->prepare($sql);
             if ($quantity >= 1) {
                 $state = $req_prep->execute(array(
-                    "q" => $quantity++,
-                    "c" => ModelUser::getCartIdByUserId($user_id),
+                    "q" => $quantity + 1,
+                    "c" => $cart_id,
                     "p" => $product_id
                 ));
             } else {
@@ -105,7 +109,8 @@ class ModelCart_item extends Model
     public static function removeProduct($id, string $getUserId)
     {
         //Le produit id est présent dans le panier avec 1 quantité
-        $quantity = self::getQuantityProduct($id);
+        $cart_id = ModelUser::getCartIdByUserId($getUserId);
+        $quantity = self::getQuantityProduct($id, $cart_id);
         if ($quantity == 1) {
             $sql = "DELETE FROM proj__cart_item WHERE cart_id =:c AND product_id =:p";
         }
@@ -117,14 +122,14 @@ class ModelCart_item extends Model
             $req_prep = self::getPdo()->prepare($sql);
             if($quantity > 1){
                 $state = $req_prep->execute(array(
-                    "q" => $quantity--,
-                    "c" => ModelUser::getCartIdByUserId($getUserId),
+                    "q" => $quantity - 1,
+                    "c" => $cart_id,
                     "p" => $id
                 ));
             }
             else {
                 $state = $req_prep->execute(array(
-                    "c" => ModelUser::getCartIdByUserId($getUserId),
+                    "c" => $cart_id,
                     "p" => $id
                 ));
             }
