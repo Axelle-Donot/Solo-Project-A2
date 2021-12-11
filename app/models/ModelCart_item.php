@@ -159,4 +159,22 @@ class ModelCart_item extends Model
         return $items;
     }
 
+    public static function emptyCart($cart_id){
+        $sql = "SELECT COUNT(*) AS value FROM proj__cart_item WHERE cart_id=:c";
+        try {
+            $req_prep = self::getPdo()->prepare($sql);
+            $req_prep->execute(array("c" => $cart_id));
+            $res = $req_prep->fetch();
+            if($res['value'] == 0){
+                return 0;
+            }
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage();
+            }
+            return 1;
+        }
+        return 1;
+    }
+
 }
