@@ -38,12 +38,13 @@ class ControllerProduct {
     $name = ($_POST['name']);
     $desc = ($_POST['description']);
     $price = ($_POST['price']);
+    ModelProduct::create($tag,$discount,$name,$desc,$price);
+    ControllerProduct::readAll();
 
   }
 
   public static function delete(){
-    $value = ModelProduct::select($_GET['id']);
-    ModelProduct::delete($value);
+    ModelProduct::delete($_GET['id']);
     ControllerProduct::readAll();
   }
 
@@ -57,13 +58,14 @@ class ControllerProduct {
   }
 
   public static function updated(){
+    $id = ($_POST['id']);
     $tag = ($_POST['tag']);
     $discount = ($_POST['discount']);
     $name = ($_POST['name']);
     $desc = ($_POST['description']);
     $price = ($_POST['price']);
-
+    ModelProduct::update($id,$tag,$discount,$name,$desc,$price);
+    ControllerProduct::readAll();
   }
-
 }
 ?>

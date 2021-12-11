@@ -1,7 +1,11 @@
-<form method="post" action="index.php?action=upadated">
+<form method="post" action="index.php?a=updated&c=product">
     <fieldset>
         <legend>Modifier un sabre :</legend>
 
+        <p>
+            <label for="id_produit">id</label> :
+            <input type="text" value="<?php echo htmlspecialchars($value->get("product_id")); ?>" name="id" id="id_produit" readonly/>
+        </p>
         <p>
             <label for="tag_produit">Tag</label> :
             <input type="text" value="<?php echo htmlspecialchars($value->get("tag_id")); ?>" name="tag" id="tag_produit"/>

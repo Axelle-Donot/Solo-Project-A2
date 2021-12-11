@@ -79,13 +79,50 @@ class Model {
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
 
-    $sql = "DELETE FROM `proj__" . $table_name . "` WHERE `" . $pkey . "`=:tag;";
+    $sql = "DELETE FROM proj__" . $table_name . " WHERE " . $pkey . "=:tag";
+    $db = self::getPdo();
+    $rep = $db->prepare($sql);
+    $rep->execute(array("tag" => $primaryValue));
+  }
+
+  public static function update($id, $tag,$discount,$name,$description,$price){
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $pkey = static::$primary;
+
+    $sql = "UPDATE  proj__" . $table_name . " SET " . "tag_id =" . ":tag," . "discount_id =" . ":discount," . 
+    "name =" . ":name," . "description =" . ":description," . "price =" . ":price" . " WHERE " . "product_id=" . ":id;";
 
     try {
 
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $primaryValue));
+      $rep->execute(array("id" => $id, "tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price));
+      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+      $el = $rep->fetch();
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+
+    return $el ?? false;
+  }
+
+  public static function create($tag,$discount,$name,$description,$price){
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $pkey = static::$primary;
+
+    $sql = "INSERT INTO proj__"  . $table_name . "(tag_id,discount_id,name,description,price)" . " VALUES " . "(:tag," . ":discount," . ":name," . ":description," . ":price)";
+
+
+    try {
+
+      $db = self::getPdo();
+      $rep = $db->prepare($sql);
+      $rep->execute(array("tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price));
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {
