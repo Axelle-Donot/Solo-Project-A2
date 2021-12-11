@@ -88,8 +88,7 @@
                 $q = htmlspecialchars($item['quantity']);
                 $total_price += $p->get('price') * (int)$q ?>
                 <div>
-                    <a class="link-info" href="?a=read&c=product&id=" .<?php echo $p->get('product_id'); ?>
-                       target="_blank">
+                    <a class="link-info" href='?a=read&c=product&id=<?= $p->get('product_id')?>' target="_blank">
                         <?= $q ?> x <?= htmlspecialchars($p->get('name')) ?>
                     </a>
                     <span class="price">
@@ -105,7 +104,6 @@
             </div>
         </div>
     </div>
-
 <?php } else { ?>
     <div>Merci d'être un client fidèle de Solo</div>
     <div class="row">
@@ -115,7 +113,7 @@
                     <div class="row">
                         <div class="center">
                             <?php
-                            echo $u = ModelUser::select($user);
+                                $u = ModelUser::select($user);
                             ?>
                             <h3>Adresse de livraison</h3>
                             <p>*Attention Solo considère que l'adresse de livraison est la même que celle de
@@ -201,7 +199,7 @@
                     $q = htmlspecialchars($item['quantity']);
                     $total_price += $p->get('price') * (int)$q ?>
                     <div>
-                        <a class="link-info" href="?a=read&c=product&id=2" target="_blank">
+                        <a class="link-info" href='?a=read&c=product&id=<?= $p->get('product_id')?>' target="_blank">
                             <?= $q ?> x <?= htmlspecialchars($p->get('name')) ?>
                         </a>
                         <span class="price">
