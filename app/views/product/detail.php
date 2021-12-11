@@ -6,3 +6,5 @@
   <?php $id = $value->get("product_id"); ?>
   <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= urlencode($id) ?>">Ajouter au panier</a>
 </div>
+
+<?php echo ModelCart_item::totalPrice(ModelUser::getCartIdByUserId(Session::getUserId())); ?>

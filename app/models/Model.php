@@ -63,7 +63,6 @@ class Model
 
         $sql = "SELECT * FROM `proj__" . $table_name . "` WHERE `" . $pkey . "`=:tag;";
         try {
-
             $db = self::getPdo();
             $rep = $db->prepare($sql);
             $rep->execute(array("tag" => $primaryValue));

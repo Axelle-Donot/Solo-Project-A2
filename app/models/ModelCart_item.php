@@ -78,9 +78,8 @@ class ModelCart_item extends Model
         // S'il est déjà dans le panier
         if ($quantity >= 1) {
             $sql = "UPDATE proj__cart_item SET quantity =:q WHERE cart_id =:c AND product_id =:p";
-        }
-        // S'il n'est pas dans le panier
-        else if($quantity == 0){
+        } // S'il n'est pas dans le panier
+        else if ($quantity == 0) {
             $sql = "INSERT INTO proj__cart_item VALUES (:c,:p,1)";
         }
         try {
@@ -113,21 +112,19 @@ class ModelCart_item extends Model
         $quantity = self::getQuantityProduct($id, $cart_id);
         if ($quantity == 1) {
             $sql = "DELETE FROM proj__cart_item WHERE cart_id =:c AND product_id =:p";
-        }
-        //Le produit est id est présent dans le panier avec plus d'un en quantité
-        else if($quantity > 1){
+        } //Le produit est id est présent dans le panier avec plus d'un en quantité
+        else if ($quantity > 1) {
             $sql = "UPDATE proj__cart_item SET quantity =:q WHERE cart_id =:c AND product_id =:p";
         }
         try {
             $req_prep = self::getPdo()->prepare($sql);
-            if($quantity > 1){
+            if ($quantity > 1) {
                 $state = $req_prep->execute(array(
                     "q" => $quantity - 1,
                     "c" => $cart_id,
                     "p" => $id
                 ));
-            }
-            else {
+            } else {
                 $state = $req_prep->execute(array(
                     "c" => $cart_id,
                     "p" => $id
@@ -140,7 +137,6 @@ class ModelCart_item extends Model
             return false;
         }
         return $state;
-
     }
 
     public static function getAllItems($cart): array
@@ -159,13 +155,14 @@ class ModelCart_item extends Model
         return $items;
     }
 
-    public static function emptyCart($cart_id){
+    public static function emptyCart($cart_id)
+    {
         $sql = "SELECT COUNT(*) AS value FROM proj__cart_item WHERE cart_id=:c";
         try {
             $req_prep = self::getPdo()->prepare($sql);
             $req_prep->execute(array("c" => $cart_id));
             $res = $req_prep->fetch();
-            if($res['value'] == 0){
+            if ($res['value'] == 0) {
                 return 0;
             }
         } catch (PDOException $e) {
@@ -176,5 +173,4 @@ class ModelCart_item extends Model
         }
         return 1;
     }
-
 }

@@ -195,3 +195,53 @@ div.detail img {
 	max-width: 250px !important;
 	margin-bottom: 1rem;
 }
+
+/* Partie formulaire de paiement */
+
+.row {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin: 0 -16px;
+}
+
+.col-25 {
+	-ms-flex: 25%;
+	flex: 25%;
+}
+
+.center {
+	text-align: center;
+}
+
+.col-50 {
+	-ms-flex: 50%;
+	flex: 50%;
+}
+
+.col-75 {
+	-ms-flex: 75%;
+	flex: 75%;
+}
+
+.container {
+	background-color: #f2f2f2;
+	padding: 5px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+span.price {
+	float: right;
+	color: grey;
+}
+
+@media (max-width: 800px) {
+	.row {
+		flex-direction: column-reverse;
+	}
+	.col-25 {
+		margin-bottom: 20px;
+	}
+}

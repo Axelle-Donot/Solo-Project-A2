@@ -79,4 +79,8 @@ class Session {
         $_SESSION['cart'][$i]['quantity']--;
     }
   }
+
+  public static function drainCart(){
+      $_SESSION['cart'] = array();
+  }
 }
