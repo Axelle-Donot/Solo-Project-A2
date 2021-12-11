@@ -85,19 +85,20 @@ class Model {
     $rep->execute(array("tag" => $primaryValue));
   }
 
-  public static function update($id, $tag,$discount,$name,$description,$price){
+  public static function update($id, $tag,$discount,$name,$description,$price,$img){
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
 
     $sql = "UPDATE  proj__" . $table_name . " SET " . "tag_id =" . ":tag," . "discount_id =" . ":discount," . 
-    "name =" . ":name," . "description =" . ":description," . "price =" . ":price" . " WHERE " . "product_id=" . ":id;";
+    "name =" . ":name," . "description =" . ":description," . "price =" . ":price," . "product_picture_id =" . ":img" . " WHERE " . "product_id=" . ":id;";
+    echo $sql;
 
     try {
 
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("id" => $id, "tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price));
+      $rep->execute(array("id" => $id, "tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price, "img" => $img));
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {

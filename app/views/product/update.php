@@ -22,9 +22,13 @@
             <label for="description_product">Description</label> :
             <input type="text" value="<?php echo htmlspecialchars($value->get("description")); ?>" name="description" id="description_product"/>
         </p>
-         <p>
+        <p>
             <label for="price_product">Price</label> :
             <input type="text" value="<?php echo htmlspecialchars($value->get("price")); ?>" name="price" id="price_product" required/>
+        </p>
+        <p>
+            <label for="img_blob">Image</label> :
+            <input type="file" value="<?php echo htmlspecialchars($value->get("product_picture_id")); ?>" name="img" id="product_picture_id" accept="image"/>
         </p>
         <p>
             <input type="submit" value="Envoyer" />
