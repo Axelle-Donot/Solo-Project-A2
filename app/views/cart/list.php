@@ -31,5 +31,10 @@
         <h4 class="my-4"> Prix total&nbsp;: <?= $total_price ?>€</h4>
         <h4 class="my-4"> Nombres d'articles : <?= $number_items ?></h4>
     </div>
+    <div>
+        <a class="btn btn-info" href="?a=pay&c=payment">Passer commande</a>
+    </div>
+
 <?php } ?>
+
 
