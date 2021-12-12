@@ -8,7 +8,7 @@
   //echo $idreduction;
   echo "<h1>BLACK FRIDAY !!!</h1>";
   echo "<a href='?a=read&c=product&id=$id' > ";
-  echo "<img src='{$p->getBlob()}'>";
+  echo "<img src='{$p->getImage()}'>";
   echo "<p>-50%</p>";
   echo "</a>";
   ?>

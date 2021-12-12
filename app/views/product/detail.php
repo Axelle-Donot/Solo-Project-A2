@@ -1,10 +1,8 @@
-<?php
-        echo '<div class="detail">';
-                echo '<h2> ' . $value->get("name") . '</h2>';
-                echo "<div><img  src='{$value->getBlob()}' alt='img du produit {$value->get('name')}'></div>";
-                echo '<p>Description ' . $value->get("description") . '</p>';
-                echo '<p>Prix ' . $value->get("price") . '€</p>';
-                $id= $value->get('product_id');
-                echo "<a href='?a=ajout&c=cart_item&id=$id' >Ajouter au panier</a>";
-        echo '</div>'
-?>
+<div class="detail">
+  <h2>Produit <?= $value->get("name") ?></h2>
+  <div><img src="<?= $value->getImage() ?>" alt="img du produit <?= $value->get("name") ?>"></div>
+  <p>Description <?= $value->get("description") ?></p>
+  <p>Prix <?= $value->get("price") ?>€</p>
+  <?php $id = $value->get("product_id"); ?>
+  <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= urlencode($id) ?>">Ajouter au panier</a>
+</div>
