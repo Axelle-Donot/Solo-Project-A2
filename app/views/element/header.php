@@ -11,7 +11,7 @@
       <div class="account">
         <?php if (!Session::isConnected()) { ?>
         <div class="login">
-          <i class="fas fa-user"></i>
+          <i class="fas fa-user m-1"></i>
           <a href="?a=login&c=user" class="login-a">Se connecter</a>
         </div>
         <span>|</span>
@@ -36,8 +36,8 @@
           </a>
         </div>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-light" type="submit">Search</button>
+          <input class="form-control me-2" type="search" placeholder="Produit" aria-label="Search">
+          <button class="btn btn-light" type="submit">Rechercher</button>
         </form>
       </div>
     </div>

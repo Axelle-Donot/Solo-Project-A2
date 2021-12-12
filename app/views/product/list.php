@@ -1,4 +1,3 @@
-<h2>Les produits :</h2>
 <div class="produits">
   <?php
   foreach ($tab_prod as $p) {
