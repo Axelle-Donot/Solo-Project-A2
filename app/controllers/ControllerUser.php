@@ -11,6 +11,18 @@ class ControllerUser extends Controller {
     require_once File::getApp(array("views", "view.php"));
   }
 
+  public static function read(): void {
+    $id = $_GET['id'] ?? '';
+    if (empty($id))
+      ControllerHome::home();
+    else {
+      $user = ModelUser::select($id);
+      $page_title = "Profil utilisateur";
+      $view = "profile";
+      require_once File::getApp(array("views", "view.php"));
+    }
+  }
+
   public static function profile(): void {
     if (!Session::isConnected())
       ControllerHome::home();
@@ -34,24 +46,37 @@ class ControllerUser extends Controller {
 
   public static function connected(): void {
     if (Session::isConnected())
-      ControllerHome::home();
-    else if (isset($_POST["mail-login"], $_POST["password-login"])) {
+      header("Location: ?a=home");
+    else if (isset($_POST["mail"], $_POST["password"])) {
       // On est sûr d'avoir un formulaire valide
-      $mail = htmlspecialchars($_POST["mail-login"]);
-      $password = htmlspecialchars($_POST["password-login"]);
+      $mail = htmlspecialchars($_POST["mail"]);
+      $password = htmlspecialchars($_POST["password"]);
 
       if (ModelUser::checkPassword($mail, $password)) {
-        Session::changeToConnected();
-        Session::updateUserId(ModelUser::getUserIdByMail($mail));
-        ControllerHome::home();
+        $user_id = ModelUser::getUserIdByMail($mail);
+        if (ModelUser::isValidated($user_id)) {
+          Session::changeToConnected();
+          Session::updateUserId(ModelUser::getUserIdByMail($_POST['mail']));
+          header("Location: ?a=home");
+        } else {
+          self::validationInfo();
+        }
       } else {
         self::login();
-        parent::error('Connexion', 'Votre compte n\'existe pas');
+        parent::error('Connexion', 'Mail ou mot de passe invalide.');
       }
     } else {
       self::login();
       parent::error('Connexion', 'Formulaire de connexion invalide');
     }
+  }
+
+  public static function disconnect(): void {
+    if (Session::isConnected()) {
+      Session::changeToDisconnected();
+      Session::updateUserId('');
+    }
+    header("Location: ?a=home");
   }
 
   public static function register(): void {
@@ -90,10 +115,7 @@ class ControllerUser extends Controller {
         "password" => htmlspecialchars($_POST["password"])
       );
       if (ModelUser::create($data)) {
-        Session::changeToConnected();
-        echo ModelUser::getUserIdByMail($data['mail']);
-        Session::updateUserId(ModelUser::getUserIdByMail($data['mail']));
-        ControllerHome::home();
+        self::validationInfo();
       } else {
         self::register();
         parent::error('Inscription', "Problème dans l'inscription.");
@@ -102,5 +124,37 @@ class ControllerUser extends Controller {
       self::register();
       parent::error('Inscription', "Formulaire d'inscription invalide");
     }
+  }
+
+  public static function validationInfo(): void {
+    // Redirection à l'accueil si l'on veut accéder alors que l'on est pas dans le processus de création/login
+    if (!isset($_POST['mail'], $_POST['password']))
+      header('Location: ?a=home');
+    // Redirection à l'accueil si l'utilisateur est déjà validé
+    if (ModelUser::isValidated(ModelUser::getUserIdByMail($_POST["mail"])))
+      header("Location: ?a=home");
+
+    $page_title = 'Validation par mail';
+    $view = 'validationInfo';
+    require_once File::getApp(array('views', 'view.php'));
+  }
+
+  public static function validate(): void {
+    // Redirection à l'accueil si les var nécessaires n'existent pas
+    if (!isset($_GET['mail'], $_GET['nonce']))
+      header('Location: ?a=home');
+    // Redirection à l'accueil si on est déjà connecté ou déjà validé
+    if (Session::isConnected() || ModelUser::isValidated(ModelUser::getUserIdByMail($_GET['mail'])))
+      header('Location: ?a=home');
+
+    $res = ModelUser::validating(ModelUser::getUserIdByMail($_GET['mail']), $_GET['nonce']);
+    // Si bien validé, on connecte la personne
+    if ($res) {
+      Session::changeToConnected();
+      Session::updateUserId(ModelUser::getUserIdByMail($_GET['mail']));
+    }
+    $page_title = 'Validation par mail';
+    $view = 'validationResult';
+    require_once File::getApp(array('views', 'view.php'));
   }
 }

@@ -19,16 +19,19 @@
           <a href="?a=register&c=user">S'inscrire</a>
         </div>
         <?php } else { ?>
-          <div class="login">
+          <div class="login position-relative">
             <i class="fas fa-user"></i>
-            <a href="?a=profile&c=user" class="login-a">Profil</a>
+            <a href="?a=profile&c=user" class="login-a mx-2">Profil</a>
+            <div class="submenu">
+              <div><a href="?a=disconnect&c=user">Se déconnecter</a></div>
+            </div>
           </div>
         <?php } ?>
       </div>
       <div class="panier">
         <div class="cart">
           <a href="?a=read&c=cart">
-            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-shopping-cart mx-1"></i>
             Panier
           </a>
         </div>

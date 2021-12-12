@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center align-items-center mb-4">
-    <img src="<?= $user->getImage() ?>" alt="Image de profil de <?= $user->get('username') ?>">
+    <img width="64" src="<?= $user->getImage() ?>" alt="Image de profil de <?= $user->get('username') ?>">
     <span class="m-2 fs-5 text-decoration-underline">Profil de <?= $user->get('username') ?></span>
 </div>
 

@@ -6,12 +6,15 @@ class Session {
     // création du tableau user
     if (!isset($_SESSION['user'])) {
       $_SESSION['user'] = array();
+
       // Création variable connexion user->isLogged
       if (!isset($_SESSION['user']['isLogged']))
         $_SESSION['user']['isLogged'] = false;
       // Création variable identification user->userId
       if (!isset($_SESSION['user']['userId']))
         $_SESSION['user']['userId'] = "";
+      if (!isset($_SESSION['user']['isAdmin']))
+        $_SESSION['user']['isAdmin'] = false;
 
     }
     // Création du tableau du panier

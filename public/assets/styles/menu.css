@@ -310,14 +310,12 @@ header#default div.submenu {
 	display: none;
 	position: absolute;
 	top: 100%;
-	left: 0;
-	width: 100%;
-	background-color: white;
-	box-shadow: 0 10px 20px 0px #000;
-	text-shadow: none;
+	right: 0;
+	background-color: rgb(78, 89, 107);
+	box-shadow: 0 5px 10px 0 #2e2e2e;
 }
 
-header#default nav > div:hover div.submenu {
+header#default div:hover>div.submenu {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -330,17 +328,18 @@ header#default div.submenu div {
 }
 
 header#default div.submenu a {
-	color: black;
+	color: #47949e;
 	font-family: "Roboto", Arial, "Courier New", Courier, monospace;
-	font-size: 0.6em;
+	font-size: 1rem;
 	width: 100%;
 	padding: 10px;
 	text-align: center;
+	text-decoration: none;
 }
 
 header#default div.submenu a:hover {
-	background-color: rgb(200, 200, 200);
-	color: var(--hover-a-color);
+	background-color: rgb(44, 50, 60);
+	/*color: var(--hover-a-color);*/
 	font-weight: bold;
 }
 
