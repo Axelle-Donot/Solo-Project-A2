@@ -24,6 +24,11 @@ class Session {
     }
   }
 
+  public static function resetSession(): void {
+    session_destroy();
+    self::initSession();
+  }
+
   /* --- Compte utilisateur --- */
   public static function isConnected(): bool {
     return $_SESSION['user']['isLogged'];
@@ -43,6 +48,16 @@ class Session {
 
   public static function updateUserId(string $userId): void {
     $_SESSION['user']['userId'] = $userId;
+  }
+
+  public static function updateRole(string $role): void {
+    if ($role == 'admin') {
+      $_SESSION['user']['isAdmin'] = true;
+    }
+  }
+
+  public static function isAdmin(): bool {
+    return $_SESSION['user']['isAdmin'];
   }
 
   /* --- Panier --- */
@@ -83,7 +98,7 @@ class Session {
     }
   }
 
-  public static function drainCart(){
-      $_SESSION['cart'] = array();
+  public static function drainCart() {
+    $_SESSION['cart'] = array();
   }
 }

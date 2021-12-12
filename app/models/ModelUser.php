@@ -57,6 +57,12 @@ VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, 
     return ($nbOfAccounts ?? 0) == 1;
   }
 
+  public static function bindingUser2Session($user_id): void {
+    Session::changeToConnected();
+    Session::updateUserId($user_id);
+    Session::updateRole(ModelUser::select($user_id)->get('role'));
+  }
+
   public static function getUserIdByMail(string $mail) {
     $sql = "SELECT `user_id` FROM `proj__user` WHERE `mail`=:mail_tag;";
     try {
@@ -104,8 +110,37 @@ VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, 
       return false;
     }
     // TRUE on success or FALSE on failure
-    echo $state;
     return $state;
+  }
+
+  public static function isMailUnique($mail): bool {
+    $sql = "SELECT COUNT(*) AS nbOfMail FROM `proj__user` WHERE `mail`=:mail_tag;";
+
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $state = $req_prep->execute(array("mail_tag" => $mail));
+      $isUnique = $req_prep->fetch(PDO::FETCH_ASSOC)['nbOfMail'] == 0;
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) echo $e->getMessage();
+      return false;
+    }
+    // TRUE on success or FALSE on failure
+    return $isUnique && $state;
+  }
+
+  public static function isUsernameUnique($username): bool {
+    $sql = "SELECT COUNT(*) AS nbOfUsername FROM `proj__user` WHERE `username`=:username_tag;";
+
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $state = $req_prep->execute(array("username_tag" => $username));
+      $isUnique = $req_prep->fetch(PDO::FETCH_ASSOC)['nbOfUsername'] == 0;
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) echo $e->getMessage();
+      return false;
+    }
+    // TRUE on success or FALSE on failure
+    return $isUnique && $state;
   }
 
   public function get($nom_attribut) {

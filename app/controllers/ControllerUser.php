@@ -55,26 +55,24 @@ class ControllerUser extends Controller {
       if (ModelUser::checkPassword($mail, $password)) {
         $user_id = ModelUser::getUserIdByMail($mail);
         if (ModelUser::isValidated($user_id)) {
-          Session::changeToConnected();
-          Session::updateUserId(ModelUser::getUserIdByMail($_POST['mail']));
+          ModelUser::bindingUser2Session(ModelUser::getUserIdByMail($_POST['mail']));
           header("Location: ?a=home");
         } else {
           self::validationInfo();
         }
       } else {
-        self::login();
+        header("Location: ?a=login&c=user");
         parent::error('Connexion', 'Mail ou mot de passe invalide.');
       }
     } else {
-      self::login();
+      header("Location: ?a=login&c=user");
       parent::error('Connexion', 'Formulaire de connexion invalide');
     }
   }
 
   public static function disconnect(): void {
     if (Session::isConnected()) {
-      Session::changeToDisconnected();
-      Session::updateUserId('');
+      Session::resetSession();
     }
     header("Location: ?a=home");
   }
@@ -91,21 +89,30 @@ class ControllerUser extends Controller {
 
   public static function registered(): void {
     if (Session::isConnected())
-      ControllerHome::home();
+      header("Location: ?a=home");
     else if (isset($_POST["lastname"], $_POST["firstname"], $_POST["username"], $_POST["mail"], $_POST["password"])) {
       // Validité de la confirmation du mdp
       if ($_POST["mail"] != $_POST["mail-conf"]) {
         self::register();
         parent::error('Inscription', "L'adresse mail de confirmation doit être le même que l'adresse mail.");
+        return;
       } else if ($_POST["password"] != $_POST["password-conf"]) {
         self::register();
         parent::error('Inscription', "Le mot de passe de confirmation doit être le même que le mot de passe.");
+        return;
       }
       // Validité de l'adresse mail
       if (!filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL)) {
         self::register();
         parent::error('Inscription', "L'adresse mail est invalide.");
+        return;
       }
+      if (!ModelUser::isMailUnique($_POST["mail"]) || !ModelUser::isUsernameUnique($_POST["username"])) {
+        self::register();
+        parent::error('Inscription', "Mail ou nom d'utilisateur déjà existant(s).");
+        return;
+      }
+
       // On est maintenant sûr d'avoir un formulaire valide
       $data = array(
         "lastname" => htmlspecialchars($_POST["lastname"]),
@@ -150,8 +157,7 @@ class ControllerUser extends Controller {
     $res = ModelUser::validating(ModelUser::getUserIdByMail($_GET['mail']), $_GET['nonce']);
     // Si bien validé, on connecte la personne
     if ($res) {
-      Session::changeToConnected();
-      Session::updateUserId(ModelUser::getUserIdByMail($_GET['mail']));
+      ModelUser::bindingUser2Session(ModelUser::getUserIdByMail($_GET['mail']));
     }
     $page_title = 'Validation par mail';
     $view = 'validationResult';
