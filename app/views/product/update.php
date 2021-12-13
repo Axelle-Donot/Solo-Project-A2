@@ -1,4 +1,4 @@
-<form method="post" action="index.php?a=updated&c=product">
+<form method="post" action="?a=updated&c=product" enctype='multipart/form-data'>
     <fieldset>
         <legend>Modifier un sabre :</legend>
 
@@ -27,8 +27,8 @@
             <input type="text" value="<?php echo htmlspecialchars($value->get("price")); ?>" name="price" id="price_product" required/>
         </p>
         <p>
-            <label for="img_blob">Image</label> :
-            <input type="file" value="<?php echo htmlspecialchars($value->get("product_picture_id")); ?>" name="img" id="product_picture_id" accept="image"/>
+            <label for="product_picture_id">Image</label> :
+            <input type="file" value="<?php echo htmlspecialchars($value->get("product_picture_id")); ?>" name="picture" id="product_picture_id" accept="image"/>
         </p>
         <p>
             <input type="submit" value="Envoyer" />

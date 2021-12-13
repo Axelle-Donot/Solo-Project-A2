@@ -56,9 +56,10 @@ class ControllerProduct {
 
   public static function updated(){
 
-    $im = ($_FILES['img']);
-    $valueimg = array("img_name" => $_POST['name'], "img_size" => "" ,"img_type" => "",  "img_type" => "" ,"img_blob" => $im);
-    $image = ModelImages::addimg($valueimg);
+    $tmpName = $_FILES['picture']["tmp_name"];
+    $valueimg = array("img_name" => $_POST['name'], "img_size" => $_FILES['picture']["size"] ,"img_type" => $_FILES['picture']["type"], "img_blob" => file_get_contents($tmpName));
+    $image = ControllerImages::addimg($valueimg);
+    print_r($image);
 
     $value = array ( "tag_id" => $_POST['tag'] , "discount_id" => $_POST['discount'] , "name" => $_POST['name'] , "description" => $_POST['description'], "price" => $_POST['price'], "product_picture_id" => $image->get("img_id"));
     $id =  $_POST['id'];
