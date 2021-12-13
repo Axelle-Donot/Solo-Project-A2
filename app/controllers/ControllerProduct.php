@@ -33,14 +33,11 @@ class ControllerProduct {
   }
 
   public static function created(){
-    $tag = ($_POST['tag']);
-    $discount = ($_POST['discount']);
-    $name = ($_POST['name']);
-    $desc = ($_POST['description']);
-    $price = ($_POST['price']);
-    ModelProduct::create($tag,$discount,$name,$desc,$price);
-    ControllerProduct::readAll();
 
+    $value = array ("tag_id" => $_POST['tag'] , "discount_id" => $_POST['discount'] , "name" => $_POST['name'] , "description" => $_POST['description'], "price" => $_POST['price']);
+
+    ModelProduct::create($value);
+    ControllerProduct::readAll();
   }
 
   public static function delete(){
@@ -58,14 +55,12 @@ class ControllerProduct {
   }
 
   public static function updated(){
-    $id = ($_POST['id']);
-    $tag = ($_POST['tag']);
-    $discount = ($_POST['discount']);
-    $name = ($_POST['name']);
-    $desc = ($_POST['description']);
-    $price = ($_POST['price']);
-    $img = ($_FILES['img']);
-    ModelProduct::update($id,$tag,$discount,$name,$desc,$price,$img);
+
+    $value = array ( "tag_id" => $_POST['tag'] , "discount_id" => $_POST['discount'] , "name" => $_POST['name'] , "description" => $_POST['description'], "price" => $_POST['price']);
+    $id =  $_POST['id'];
+
+    //$img = ($_FILES['img']);
+    ModelProduct::update($value,$id);
     ControllerProduct::readAll();
   }
 }

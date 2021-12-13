@@ -85,20 +85,26 @@ class Model {
     $rep->execute(array("tag" => $primaryValue));
   }
 
-  public static function update($id, $tag,$discount,$name,$description,$price,$img){
+  public static function update($tab,$primaryValue){
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
 
-    $sql = "UPDATE  proj__" . $table_name . " SET " . "tag_id =" . ":tag," . "discount_id =" . ":discount," . 
-    "name =" . ":name," . "description =" . ":description," . "price =" . ":price," . "product_picture_id =" . ":img" . " WHERE " . "product_id=" . ":id;";
-    echo $sql;
+    $amodif = "";
+    
+    foreach ($tab as $key => $value){
+      $amodif = $amodif . $key . " = \"" . $value . "\","; 
+    }
 
+    $modif = rtrim($amodif,",");
+
+    $sql = "UPDATE proj__" . $table_name . " SET " . $modif . " WHERE " . $pkey . "=:tag";
+    echo $sql;
     try {
 
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("id" => $id, "tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price, "img" => $img));
+      $rep->execute(array("tag" => $primaryValue));
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {
@@ -111,19 +117,35 @@ class Model {
     return $el ?? false;
   }
 
-  public static function create($tag,$discount,$name,$description,$price){
+  public static function create($tab){
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
 
-    $sql = "INSERT INTO proj__"  . $table_name . "(tag_id,discount_id,name,description,price)" . " VALUES " . "(:tag," . ":discount," . ":name," . ":description," . ":price)";
+    $attribut = "(";
+    $valeurs = "(";
 
+    foreach ($tab as $key => $value){
+      $attribut = $attribut . $key . " ," ;
+      $valeurs = $valeurs . " \" " . $value . " \"," ;
+    }
+
+    $attrib = rtrim($attribut,",");
+
+    $val = rtrim($valeurs,",");
+
+
+    $attrib = $attrib . ")";
+    $val  = $val . ")";
+
+
+    $sql = "INSERT INTO proj__"  . $table_name . $attrib . " VALUES " . $val;
 
     try {
 
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $tag, "discount" => $discount, "name" => $name, "description" => $description, "price" => $price));
+      $rep->execute();
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {
