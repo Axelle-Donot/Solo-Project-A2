@@ -18,16 +18,15 @@ class ModelDiscount extends Model {
   }
 
   // --- GETTERS ---
-
   public function getDiscountId() {
     return $this->discount_id;
   }
 
-  public function getReduction() {
+  public function getReduction(): int {
     return $this->reduction;
   }
 
-  public function getIsPercentage() {
+  public function IsPercentage(): bool {
     return $this->is_percentage;
   }
 
@@ -50,8 +49,8 @@ class ModelDiscount extends Model {
     $req_prep = Model::getPDO()->prepare($sql);
 
     $values = array(
-        "id" => $id,
-        //nomdutag => valeur, ...
+      "id" => $id,
+      //nomdutag => valeur, ...
     );
     // On donne les valeur s et on exécute la requête     
     $req_prep->execute($values);
@@ -61,7 +60,7 @@ class ModelDiscount extends Model {
     $tab_red = $req_prep->fetchAll();
     // Attention, si il n'y a pas de résultats, on renvoie false
     if (empty($tab_red))
-        return false;
+      return false;
     return $tab_red[0];
   }
 }

@@ -1,6 +1,7 @@
 <?php
 require_once File::getApp(array("models", "Model.php"));
 require_once File::getApp(array("models", "ModelImages.php"));
+require_once File::getApp(array("models", "ModelDiscount.php"));
 
 class ModelProduct extends Model {
   private $product_id;
@@ -46,6 +47,20 @@ class ModelProduct extends Model {
 
   public function getImage(): string {
     return ModelImages::getBlob($this->product_picture_id);
+  }
+
+  public function getPrixEffectif(): string {
+    $discount = ModelDiscount::select($this->discount_id);
+    if ($discount == false)
+      return $this->price;
+    if ($discount->isPercentage())
+      return $this->price * ($discount->getReduction() / 100);
+    else
+      return $this->price - $discount->getReduction();
+  }
+
+  public function hasDiscount(): bool {
+    return !is_null($this->discount_id);
   }
 
   public function set($nom_attribut, $valeur) {
