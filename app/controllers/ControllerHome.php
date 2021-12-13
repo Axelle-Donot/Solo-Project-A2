@@ -1,12 +1,9 @@
 <?php
-require_once File::getApp(array('lib', "PHPMailer.php"));
-require_once File::getApp(array('lib', "SMTP.php"));
-require_once File::getApp(array('lib', "Exception.php"));
-
+require_once File::getApp(array('lib', 'PHPMailer.php'));
+require_once File::getApp(array('lib', 'SMTP.php'));
+require_once File::getApp(array('lib', 'Exception.php'));
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 class ControllerHome extends Controller {
   protected static $object = "home";
@@ -16,6 +13,16 @@ class ControllerHome extends Controller {
     $view = 'accueil';
     require_once File::getApp(array("views", "view.php"));
 
+  }
+
+  public static function search() {
+    if (!isset($_GET['q']))
+      header('Location: ?a=home');
+    $tab_prod = ModelProduct::searchProduct($_GET['q']);
+    $tab_user = ModelUser::searchUser($_GET['q']);
+    $page_title = 'Recherche';
+    $view = 'search';
+    require_once File::getApp(array("views", "view.php"));
   }
 
   public static function contact() {
@@ -58,12 +65,12 @@ class ControllerHome extends Controller {
     $mail->addAddress('lkhclagclagcm@yopmail.com'); // email destination
     // Finally send email
     if ($mail->send()) {
-      echo "Email Envoyé";
+      self::error("Envoie mail", "Email Envoyé !");
     } else {
-      echo "Le message ne peut pas être envoyé";
+      self::error("Envoie mail", "Le message ne peut pas être envoyé...");
     }
     // Closing smtp connection
     $mail->smtpClose();
-    ControllerHome::goContact();
+    ControllerHome::contact();
   }
 }

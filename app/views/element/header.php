@@ -35,9 +35,10 @@
             Panier
           </a>
         </div>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Produit" aria-label="Search">
-          <button class="btn btn-light" type="submit">Rechercher</button>
+        <form method="get" class="d-flex">
+          <input type="hidden" name="a" value="search">
+          <input class="form-control me-1" name="q" type="search" placeholder="Recherche..." aria-label="Search">
+          <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
         </form>
       </div>
     </div>

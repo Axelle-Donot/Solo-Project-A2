@@ -143,6 +143,25 @@ VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, 
     return $isUnique && $state;
   }
 
+  public static function searchUser(string $query) {
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $sql = "SELECT *FROM `proj__$table_name` WHERE `username` LIKE :search_tag
+                              OR `first_name` LIKE :search_tag
+                              OR `last_name` LIKE :search_tag
+                              OR `mail` LIKE :search_tag;";
+    try {
+      $req_prep = self::getPdo()->prepare($sql);
+      $state = $req_prep->execute(array(":search_tag" => '%' . $query . '%'));
+      $tab = $req_prep->fetchAll(PDO::FETCH_CLASS, $class_name);
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) echo $e->getMessage();
+      return false;
+    }
+    if (!$state) return false;
+    return $tab;
+  }
+
   public function get($nom_attribut) {
     if (property_exists($this, $nom_attribut))
       return $this->$nom_attribut;
