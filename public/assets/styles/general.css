@@ -1,5 +1,6 @@
 @import "fonts.css";
 @import "menu.css";
+@import "footer.css";
 
 /* CSS Commun important */
 *, input {
@@ -54,10 +55,6 @@ body {
     width: 100%;
     max-width: none;
   }
-}
-
-.footer {
-  margin-top: 30px;
 }
 
 

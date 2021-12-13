@@ -24,9 +24,7 @@
       require_once $filepath;
       ?>
     </div>
-    <div class="footer">
-      Site de projet Solo - Q5
-    </div>
+    <?php require_once File::getApp(array("views", "element", "footer.php")); ?>
 
     <script defer src="assets/lib/bootstrap.min.js"></script>
     <script defer src="assets/lib/fontawesome.js"></script>
