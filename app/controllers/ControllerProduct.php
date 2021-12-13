@@ -64,7 +64,7 @@ class ControllerProduct {
     $name = ($_POST['name']);
     $desc = ($_POST['description']);
     $price = ($_POST['price']);
-    $img = ($_POST['img']);
+    $img = ($_FILES['img']);
     ModelProduct::update($id,$tag,$discount,$name,$desc,$price,$img);
     ControllerProduct::readAll();
   }
