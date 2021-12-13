@@ -17,6 +17,11 @@
         <input id="user" class="form-control" type="text" placeholder="Entrer le nom d'utilisateur" name="username"
                required>
       </div>
+       <div class="mb-3">
+        <label for="phone" class="form-label">Téléphone&nbsp;:</label>
+        <input id="phone" class="form-control" type="text" placeholder="ton 06" name="phone"
+               required>
+      </div>
 
       <div class="mb-3">
         <label for="mm" class="form-label">Adresse email&nbsp;:</label>

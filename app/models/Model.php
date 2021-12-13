@@ -99,7 +99,6 @@ class Model {
     $modif = rtrim($amodif,",");
 
     $sql = "UPDATE proj__" . $table_name . " SET " . $modif . " WHERE " . $pkey . "=:tag";
-    echo $sql;
     try {
 
       $db = self::getPdo();
