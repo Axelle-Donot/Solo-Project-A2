@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title><?= $page_title; ?></title>
+    <title><?= htmlspecialchars($page_title) ?> - Solo</title>
     <!-- On charge les icônes du site -->
     <link rel="icon" type="image/png" href="assets/img/icons/Logo_Solo_32.png" sizes="32x32"/>
     <link rel="icon" type="image/png" href="assets/img/icons/Logo_Solo_64.png" sizes="64x64"/>

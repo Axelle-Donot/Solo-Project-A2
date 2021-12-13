@@ -9,10 +9,9 @@ class ControllerHome extends Controller {
   protected static $object = "home";
 
   public static function home() {
-    $page_title = 'Super Solo';
+    $page_title = 'Accueil';
     $view = 'accueil';
     require_once File::getApp(array("views", "view.php"));
-
   }
 
   public static function search() {

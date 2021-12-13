@@ -33,8 +33,8 @@ class ModelAddress extends Model {
     return false;
   }
 
-  public function __toString() {
-    return "$this->address_id";
+  public function __toString(): string {
+    return "$this->$street, $this->city ($this->zip_code), $this->state, $this->country";
   }
 
 }

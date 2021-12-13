@@ -57,8 +57,8 @@ class ModelOrdered_product extends Model {
     $items = ModelCart_item::getAllItems($cart);
     foreach ($items as $key => $value) {
       $p = ModelProduct::select($value['product_id']);
-      $q = htmlspecialchars($value['quantity']);
-      $total_price += $p->get('price') * (int)$q;
+      $q = $value['quantity'];
+      $total_price += $p->getPrixEffectif() * (int)$q;
     }
     return $total_price;
   }

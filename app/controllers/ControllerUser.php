@@ -49,8 +49,8 @@ class ControllerUser extends Controller {
       header("Location: ?a=home");
     else if (isset($_POST["mail"], $_POST["password"])) {
       // On est sûr d'avoir un formulaire valide
-      $mail = htmlspecialchars($_POST["mail"]);
-      $password = htmlspecialchars($_POST["password"]);
+      $mail = $_POST["mail"];
+      $password = $_POST["password"];
 
       if (ModelUser::checkPassword($mail, $password)) {
         $user_id = ModelUser::getUserIdByMail($mail);
@@ -115,11 +115,11 @@ class ControllerUser extends Controller {
 
       // On est maintenant sûr d'avoir un formulaire valide
       $data = array(
-        "lastname" => htmlspecialchars($_POST["lastname"]),
-        "firstname" => htmlspecialchars($_POST["firstname"]),
-        "username" => htmlspecialchars($_POST["username"]),
-        "mail" => htmlspecialchars($_POST["mail"]),
-        "password" => htmlspecialchars($_POST["password"])
+        "lastname" => $_POST["lastname"],
+        "firstname" => $_POST["firstname"],
+        "username" => $_POST["username"],
+        "mail" => $_POST["mail"],
+        "password" => $_POST["password"]
       );
       if (ModelUser::create($data)) {
         self::validationInfo();

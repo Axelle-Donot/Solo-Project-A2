@@ -1,5 +1,6 @@
 <?php
 require_once File::getApp(array("models", "Model.php"));
+require_once File::getApp(array("models", "ModelAddress.php"));
 
 class ModelUser extends Model {
   private $user_id;
@@ -172,9 +173,8 @@ VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, 
     return ModelImages::getBlob($this->profile_photo_id);
   }
 
-  public function getAdresse(): string {
-    $sql = "";
-    return "bla";
+  public function getAdresse() {
+    return ModelAddress::select($this->user_id);
   }
 
   public function set($nom_attribut, $valeur) {
