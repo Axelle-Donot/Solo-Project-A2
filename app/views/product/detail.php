@@ -1,12 +1,15 @@
-<?php
-        echo '<div class="detail">';
-                echo '<h2> ' . $value->get("name") . '</h2>';
-                echo "<div><img  src='{$value->getBlob()}' alt='img du produit {$value->get('name')}'></div>";
-                echo '<p>Description ' . $value->get("description") . '</p>';
-                echo '<p>Prix ' . $value->get("price") . '€</p>';
-                $id= $value->get('product_id');
-                echo "<a href='?a=ajout&c=cart_item&id=$id'>Ajouter au panier</a>";
-                echo "<a href='?a=delete&c=product&id=$id'>Supprimer le produit</a>";   // uniquements pour les admins 
-                echo "<a href='?a=update&c=product&id=$id'>Modifier le produit</a>";   // uniquements pour les admins 
-        echo '</div>'
-?>
+
+<div class="detail">
+  <h2>Produit <?= htmlspecialchars($value->get("name")) ?></h2>
+  <img src="<?= $value->getImage() ?>" class="rounded" alt="img du produit <?= htmlspecialchars($value->get("name")) ?>"/>
+  <h5 class="align-self-start">Description&nbsp;:</h5>
+  <p><?= htmlspecialchars($value->get("description")) ?></p>
+  <h5 class="align-self-start">Prix&nbsp;: <?php
+    echo htmlspecialchars($value->getPrixEffectif()) . '€';
+    if ($value->hasDiscount())
+      echo '&nbsp;&nbsp;&nbsp;&nbsp;<del>' . htmlspecialchars($value->get('price')) . '€</del>';
+    ?></h5>
+  <?php $id = urlencode($value->get("product_id")); ?>
+  <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= $id ?>">Ajouter au panier</a>
+</div>
+

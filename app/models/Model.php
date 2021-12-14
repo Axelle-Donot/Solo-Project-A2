@@ -2,6 +2,9 @@
 require_once File::getApp(array("lib", "Conf.php"));
 
 class Model {
+  /**
+   * @var PDO
+   */
   private static $pdo;
 
   private static function Init() {
@@ -33,21 +36,18 @@ class Model {
   public static function selectAll() {
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
-
     $sql = "SELECT * FROM `proj__" . $table_name . "`;";
     try {
       $db = self::getPdo();
       $rep = $db->query($sql);
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $tab = $rep->fetchAll();
-
     } catch (PDOException $e) {
       if (Conf::getDebug()) {
         echo $e->getMessage();
       }
       return false;
     }
-
     return $tab ?? false;
   }
 
@@ -58,7 +58,6 @@ class Model {
 
     $sql = "SELECT * FROM `proj__" . $table_name . "` WHERE `" . $pkey . "`=:tag;";
     try {
-
       $db = self::getPdo();
       $rep = $db->prepare($sql);
       $rep->execute(array("tag" => $primaryValue));
@@ -130,10 +129,7 @@ class Model {
     }
 
     $attrib = rtrim($attribut,",");
-
     $val = rtrim($valeurs,",");
-
-
     $attrib = $attrib . ")";
     $val  = $val . ")";
 
@@ -141,36 +137,9 @@ class Model {
     $sql = "INSERT INTO proj__"  . $table_name . $attrib . " VALUES " . $val;
 
     try {
-
       $db = self::getPdo();
       $rep = $db->prepare($sql);
       $rep->execute();
-      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-      $el = $rep->fetch();
-    } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
-      return false;
-    }
-
-    return $el ?? false;
-  }
-
-  public static function ajoutProduitPanier($primaryValue)
-  {
-    $table_name = static::$object;
-    $class_name = "Model" . ucfirst($table_name);
-    $pkey = static::$primary;   //cart_id
-    
-
-    //$sql = "INSERT INTO proj__" . $table_name . " VALUES " . "(1,":tag",1)";
-    $sql = "SELECT * FROM proj_produit";
-    try {
-
-      $db = self::getPdo();
-      $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $primaryValue));
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {

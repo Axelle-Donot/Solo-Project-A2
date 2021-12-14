@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le :  jeu. 18 nov. 2021 à 10:43
--- Version du serveur :  5.5.47-0+deb8u1
--- Version de PHP :  7.2.22-1+0~20190902.26+debian8~1.gbpd64eb7
+-- Hôte : 127.0.0.1
+-- Généré le : dim. 12 déc. 2021 à 22:00
+-- Version du serveur : 10.4.19-MariaDB
+-- Version de PHP : 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -17,6 +16,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `solo`
+--
 
 -- --------------------------------------------------------
 
@@ -57,6 +60,21 @@ CREATE TABLE `proj__discount` (
   `discount_id` int(11) NOT NULL,
   `reduction` int(11) NOT NULL,
   `is_percentage` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `proj__images`
+--
+
+CREATE TABLE `proj__images` (
+  `img_id` int(11) NOT NULL,
+  `img_name` varchar(50) NOT NULL,
+  `img_size` varchar(25) NOT NULL,
+  `img_type` varchar(25) NOT NULL,
+  `img_desc` varchar(100) NOT NULL,
+  `img_blob` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -122,35 +140,17 @@ CREATE TABLE `proj__tag` (
 CREATE TABLE `proj__user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
-  `profile_photo_id` INT(11) DEFAULT NULL,
+  `profile_photo_id` int(11) DEFAULT NULL,
   `password` varchar(64) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `mail` varchar(64) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL
+  `phone` varchar(15) DEFAULT NULL,
+  `role` enum('user','admin') NOT NULL DEFAULT 'user',
+  `nonce` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `proj__images`
---
-
-CREATE TABLE `proj__images` (
-    `img_id` INT(11) NOT NULL AUTO_INCREMENT ,
-    `img_name` VARCHAR( 50 ) NOT NULL ,
-    `img_size` VARCHAR( 25 ) NOT NULL ,
-    `img_type` VARCHAR( 25 ) NOT NULL ,
-    `img_desc` VARCHAR( 100 ) NOT NULL ,
-    `img_blob` MEDIUMBLOB NOT NULL ,
-    PRIMARY KEY ( `img_id` )
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Index pour les tables déchargées
---
 
 --
 -- Index pour la table `proj__address`
@@ -171,6 +171,12 @@ ALTER TABLE `proj__cart_item`
 --
 ALTER TABLE `proj__discount`
   ADD PRIMARY KEY (`discount_id`);
+
+--
+-- Index pour la table `proj__images`
+--
+ALTER TABLE `proj__images`
+  ADD PRIMARY KEY (`img_id`);
 
 --
 -- Index pour la table `proj__ordered_product`
@@ -208,11 +214,9 @@ ALTER TABLE `proj__tag`
 --
 ALTER TABLE `proj__user`
   ADD PRIMARY KEY (`user_id`),
-  ADD KEY `fk_profile_photo_id_user` (`profile_photo_id`),
   ADD UNIQUE KEY `unique_username_user` (`username`),
-  ADD UNIQUE KEY `unique_mail_user` (`mail`);
-
--- --------------------------------------------------------
+  ADD UNIQUE KEY `unique_mail_user` (`mail`),
+  ADD KEY `fk_profile_photo_id_user` (`profile_photo_id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -222,45 +226,53 @@ ALTER TABLE `proj__user`
 -- AUTO_INCREMENT pour la table `proj__address`
 --
 ALTER TABLE `proj__address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `proj__discount`
 --
 ALTER TABLE `proj__discount`
-  MODIFY `discount_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `discount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `proj__images`
+--
+ALTER TABLE `proj__images`
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `proj__ordered_product`
 --
 ALTER TABLE `proj__ordered_product`
-  MODIFY `ordered_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ordered_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `proj__product`
 --
 ALTER TABLE `proj__product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `proj__shopping_cart`
 --
 ALTER TABLE `proj__shopping_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `proj__tag`
 --
 ALTER TABLE `proj__tag`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `proj__user`
 --
 ALTER TABLE `proj__user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
--- --------------------------------------------------------
+--
+-- Contraintes pour les tables déchargées
+--
 
 --
 -- Contraintes pour la table `proj__address`
@@ -272,8 +284,8 @@ ALTER TABLE `proj__address`
 -- Contraintes pour la table `proj__cart_item`
 --
 ALTER TABLE `proj__cart_item`
-  ADD CONSTRAINT `fk_product_id_item` FOREIGN KEY (`product_id`) REFERENCES `proj__product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_cart_id_item` FOREIGN KEY (`cart_id`) REFERENCES `proj__shopping_cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_cart_id_item` FOREIGN KEY (`cart_id`) REFERENCES `proj__shopping_cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_product_id_item` FOREIGN KEY (`product_id`) REFERENCES `proj__product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `proj__ordered_product`
@@ -286,8 +298,8 @@ ALTER TABLE `proj__ordered_product`
 --
 ALTER TABLE `proj__product`
   ADD CONSTRAINT `fk_discount_id_product` FOREIGN KEY (`discount_id`) REFERENCES `proj__discount` (`discount_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_tag_id_product` FOREIGN KEY (`tag_id`) REFERENCES `proj__tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_product_picture_id_product` FOREIGN KEY (`product_picture_id`) REFERENCES `proj__images` (`img_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_product_picture_id_product` FOREIGN KEY (`product_picture_id`) REFERENCES `proj__images` (`img_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tag_id_product` FOREIGN KEY (`tag_id`) REFERENCES `proj__tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `proj__shopping_cart`
@@ -300,6 +312,18 @@ ALTER TABLE `proj__shopping_cart`
 --
 ALTER TABLE `proj__user`
   ADD CONSTRAINT `fk_profile_photo_id_user` FOREIGN KEY (`profile_photo_id`) REFERENCES `proj__images` (`img_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger de création d'adresse et de panier
+--
+CREATE TRIGGER `after_insert_user2` AFTER INSERT ON `proj__user`
+ FOR EACH ROW INSERT INTO proj__address (proj__address.address_id, proj__address.user_id) VALUES (NULL, NEW.user_id);
+CREATE TRIGGER `after_insert_user` AFTER INSERT ON `proj__user`
+ FOR EACH ROW INSERT INTO proj__shopping_cart (proj__shopping_cart.cart_id, proj__shopping_cart.customer_id) VALUES (NULL, NEW.user_id);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

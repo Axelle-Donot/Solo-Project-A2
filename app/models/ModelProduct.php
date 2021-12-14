@@ -1,5 +1,7 @@
 <?php
 require_once File::getApp(array("models", "Model.php"));
+require_once File::getApp(array("models", "ModelImages.php"));
+require_once File::getApp(array("models", "ModelDiscount.php"));
 
 class ModelProduct extends Model {
   private $product_id;
@@ -21,29 +23,21 @@ class ModelProduct extends Model {
     }
   }
 
-  public function getBlob():string {
-    $sql = "SELECT `img_type`, `img_blob` FROM `proj__images` WHERE `img_id` = :img_id;";
-
+  public static function searchProduct(string $query) {
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $sql = "SELECT * FROM `proj__$table_name` WHERE `name` LIKE :search_tag;";
     try {
       $req_prep = self::getPdo()->prepare($sql);
-      $req_prep->execute(array("img_id" => $this->product_picture_id));
-      $array_res = $req_prep->fetch(PDO::FETCH_ASSOC);
-
+      $state = $req_prep->execute(array(":search_tag" => '%' . $query . '%'));
+      $tab = $req_prep->fetchAll(PDO::FETCH_CLASS, $class_name);
     } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
-      return "a";
+      if (Conf::getDebug()) echo $e->getMessage();
+      return false;
     }
-
-    $res = array(
-      "type" => $array_res["img_type"] ?? "default",
-      "blob" => base64_encode($array_res['img_blob'] ?? "default")
-    );
-    return "data:image/{$res['type']};base64, {$res['blob']}";
+    if (!$state) return false;
+    return $tab;
   }
-
-  // --- GETTERS ---
 
   public function get($nom_attribut) {
     if (property_exists($this, $nom_attribut))
@@ -51,7 +45,23 @@ class ModelProduct extends Model {
     return false;
   }
 
-  // --- SETTERS ---
+  public function getImage(): string {
+    return ModelImages::getBlob($this->product_picture_id);
+  }
+
+  public function getPrixEffectif(): string {
+    $discount = ModelDiscount::select($this->discount_id);
+    if ($discount == false)
+      return $this->price;
+    if ($discount->isPercentage())
+      return $this->price * ($discount->getReduction() / 100);
+    else
+      return $this->price - $discount->getReduction();
+  }
+
+  public function hasDiscount(): bool {
+    return !is_null($this->discount_id);
+  }
 
   public function set($nom_attribut, $valeur) {
     if (property_exists($this, $nom_attribut))

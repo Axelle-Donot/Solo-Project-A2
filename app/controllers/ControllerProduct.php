@@ -1,7 +1,7 @@
 <?php
 require_once File::getApp(array("models", "ModelProduct.php"));
 
-class ControllerProduct {
+class ControllerProduct extends Controller {
   protected static $object = "product";
 
   public static function readAll(){
@@ -67,4 +67,3 @@ class ControllerProduct {
     ControllerProduct::readAll();
   }
 }
-?>
