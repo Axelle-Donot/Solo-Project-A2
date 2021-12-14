@@ -11,5 +11,10 @@
     ?></h5>
   <?php $id = urlencode($value->get("product_id")); ?>
   <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= $id ?>">Ajouter au panier</a>
+
+  <?php if (Session::isAdmin()) { ?>
+  <a class="btn btn-outline-danger" href="?a=delete&c=product&id= <?= $id ?>"> <i class="fas fa-trash"></i> </a>
+<?php } ?>
+
 </div>
 

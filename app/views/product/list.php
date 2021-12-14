@@ -16,6 +16,6 @@
     </div>
   <?php } ?>
 </div>
-<?php
-  echo "<a href='?a=create&c=product' > Créer un produit </a>";  // pour les admins 
-?>
+<?php if (Session::isAdmin()) { ?>
+  <a class="btn btn-outline-danger" href="?a=delete&c=product&id= <?= $id ?>"> Crée un produit </a>
+<?php } ?>

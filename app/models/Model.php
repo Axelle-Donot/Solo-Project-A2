@@ -115,7 +115,7 @@ class Model {
     return $el ?? false;
   }
 
-  public static function create($tab){
+  /*public static function create($tab){
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
@@ -150,6 +150,6 @@ class Model {
     }
 
     return $el ?? false;
-  }
+  }*/
 }
 

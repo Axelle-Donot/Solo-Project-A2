@@ -120,7 +120,8 @@ class ControllerUser extends Controller {
         "first_name" => $_POST["firstname"],
         "username" => $_POST["username"],
         "mail" => $_POST["mail"],
-        "password" => $_POST["password"]
+        "password" => Security::hacher($_POST['password']),
+        "nonce" => Security::generateRandomHex()
       );
       if (ModelUser::create($data)) {
         self::validationInfo();
