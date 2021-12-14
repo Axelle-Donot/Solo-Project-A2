@@ -65,6 +65,18 @@ class Session {
     return $_SESSION['cart'];
   }
 
+  public static function getCartPaymentResult(): array {
+    $total_price = 0;
+    $number_items = 0;
+    foreach (self::getCartItems() as $item) {
+      $p = ModelProduct::select($item['product_id']);
+      $q = $item['quantity'];
+      $number_items += 1;
+      $total_price += $p->getPrixEffectif() * (int)$q;
+    }
+    return array("totalPrice" => $total_price, "nbItems" => $number_items);
+  }
+
   public static function addProduct($product_id): void {
     $i = 0;
     $product_exist = false;

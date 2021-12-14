@@ -1,3 +1,6 @@
+<?php if (Session::isAdmin()) { ?>
+  <a class="btn btn-success mb-3" href="?a=create&c=product">Créer un produit</a>
+<?php } ?>
 <div class="produits">
   <?php
   foreach ($tab_prod as $p) {
@@ -16,6 +19,3 @@
     </div>
   <?php } ?>
 </div>
-<?php if (Session::isAdmin()) { ?>
-  <a class="btn btn-outline-danger" href="?a=delete&c=product&id= <?= $id ?>"> Crée un produit </a>
-<?php } ?>

@@ -73,7 +73,7 @@ class Model {
     return $el ?? false;
   }
 
-  public static function delete($primaryValue){
+  public static function delete($primaryValue) {
     $table_name = static::$object;
     $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
@@ -84,72 +84,56 @@ class Model {
     $rep->execute(array("tag" => $primaryValue));
   }
 
-  public static function update($tab,$primaryValue){
+  public static function update($tab, $primaryValue): bool {
     $table_name = static::$object;
-    $class_name = "Model" . ucfirst($table_name);
     $pkey = static::$primary;
 
     $amodif = "";
-    
-    foreach ($tab as $key => $value){
-      $amodif = $amodif . $key . " = \"" . $value . "\","; 
+    foreach ($tab as $key => $value) {
+      $amodif = $amodif . $key . " = :" . $key . ",";
     }
 
-    $modif = rtrim($amodif,",");
+    $modif = rtrim($amodif, ",");
 
-    $sql = "UPDATE proj__" . $table_name . " SET " . $modif . " WHERE " . $pkey . "=:tag";
+    $sql = "UPDATE proj__$table_name SET $modif WHERE $pkey =:$pkey";
     try {
-
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $primaryValue));
-      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-      $el = $rep->fetch();
+      $tab[$pkey] = $primaryValue;
+      $state = $rep->execute($tab);
     } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
+      if (Conf::getDebug()) echo $e->getMessage();
       return false;
     }
-
-    return $el ?? false;
+    return $state;
   }
 
-  /*public static function create($tab){
+  public static function create($tab): bool {
     $table_name = static::$object;
-    $class_name = "Model" . ucfirst($table_name);
-    $pkey = static::$primary;
-
     $attribut = "(";
     $valeurs = "(";
 
-    foreach ($tab as $key => $value){
-      $attribut = $attribut . $key . " ," ;
-      $valeurs = $valeurs . " \" " . $value . " \"," ;
+    foreach ($tab as $key => $value) {
+      $attribut = $attribut . $key . " ,";
+      $valeurs = $valeurs . " :" . $key . ",";
     }
 
-    $attrib = rtrim($attribut,",");
-    $val = rtrim($valeurs,",");
+    $attrib = rtrim($attribut, ",");
+    $val = rtrim($valeurs, ",");
     $attrib = $attrib . ")";
-    $val  = $val . ")";
+    $val = $val . ")";
 
-
-    $sql = "INSERT INTO proj__"  . $table_name . $attrib . " VALUES " . $val;
+    $sql = "INSERT INTO proj__" . $table_name . $attrib . " VALUES " . $val;
 
     try {
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute();
-      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-      $el = $rep->fetch();
+      $state = $rep->execute($tab);
     } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
+      if (Conf::getDebug()) echo $e->getMessage();
       return false;
     }
-
-    return $el ?? false;
-  }*/
+    return $state;
+  }
 }
 

@@ -116,16 +116,23 @@ class ControllerUser extends Controller {
 
       // On est maintenant sûr d'avoir un formulaire valide
       $data = array(
-        "last_name" => $_POST["lastname"],
-        "first_name" => $_POST["firstname"],
-        "username" => $_POST["username"],
-        "mail" => $_POST["mail"],
-        "password" => Security::hacher($_POST['password']),
-        "nonce" => Security::generateRandomHex()
+          "last_name" => $_POST["lastname"],
+          "first_name" => $_POST["firstname"],
+          "username" => $_POST["username"],
+          "mail" => $_POST["mail"],
+          "password" => Security::hacher($_POST['password']),
+          "nonce" => Security::generateRandomHex()
       );
-      if (ModelUser::create($data)) {
+      if (ModelUser::create($data)) { // Compte créé
+        $url = 'https://webinfo.iutmontp.univ-montp2.fr/~fernandezm/solo/';
+        $mail = $data['mail'];
+        self::sendMail('solo-admin@yopmail.com', $mail,
+            "Votre inscription chez Solo",
+            "<p>Bienvenue chez Solo</p>" .
+            "<p>Vous pouvez validez votre compte en cliquant sur ce lien&nbsp;</p>" .
+            "<p><a href='$url?a=validate&c=user&mail=$mail&nonce={$data['nonce']}'>Valider votre compte</a></p>");
         self::validationInfo();
-      } else {
+      } else { // Erreur dans la création
         self::register();
         parent::error('Inscription', "Problème dans l'inscription.");
       }

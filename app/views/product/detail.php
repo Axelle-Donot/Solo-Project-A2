@@ -1,4 +1,8 @@
-
+<?php if (Session::isAdmin()) { ?>
+  <a class="btn btn-success" href="?a=create&c=product"><i class="fas fa-plus"></i></a>
+  <a class="btn btn-info" href="?a=update&c=product&id=<?= urlencode($value->get("product_id")) ?>"><i class="fas fa-pen"></i></a>
+  <a class="btn btn-danger" href="?a=delete&c=product&id=<?= urlencode($value->get("product_id")) ?>"><i class="fas fa-trash"></i></a>
+<?php } ?>
 <div class="detail">
   <h2>Produit <?= htmlspecialchars($value->get("name")) ?></h2>
   <img src="<?= $value->getImage() ?>" class="rounded" alt="img du produit <?= htmlspecialchars($value->get("name")) ?>"/>
@@ -9,12 +13,6 @@
     if ($value->hasDiscount())
       echo '&nbsp;&nbsp;&nbsp;&nbsp;<del>' . htmlspecialchars($value->get('price')) . '€</del>';
     ?></h5>
-  <?php $id = urlencode($value->get("product_id")); ?>
-  <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= $id ?>">Ajouter au panier</a>
-
-  <?php if (Session::isAdmin()) { ?>
-  <a class="btn btn-outline-danger" href="?a=delete&c=product&id= <?= $id ?>"> <i class="fas fa-trash"></i> </a>
-<?php } ?>
-
+  <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= urlencode($value->get("product_id")) ?>">Ajouter au panier</a>
 </div>
 

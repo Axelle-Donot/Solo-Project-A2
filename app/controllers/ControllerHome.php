@@ -1,22 +1,19 @@
 <?php
-require_once File::getApp(array('lib', 'PHPMailer.php'));
-require_once File::getApp(array('lib', 'SMTP.php'));
-require_once File::getApp(array('lib', 'Exception.php'));
-
-use PHPMailer\PHPMailer\PHPMailer;
 
 class ControllerHome extends Controller {
   protected static $object = "home";
 
-  public static function home() {
+  public static function home(): void {
     $page_title = 'Accueil';
     $view = 'accueil';
     require_once File::getApp(array("views", "view.php"));
   }
 
-  public static function search() {
-    if (!isset($_GET['q']))
+  public static function search(): void {
+    if (!isset($_GET['q'])) {
       header('Location: ?a=home');
+      return;
+    }
     $tab_prod = ModelProduct::searchProduct($_GET['q']);
     $tab_user = ModelUser::searchUser($_GET['q']);
     $page_title = 'Recherche';
@@ -24,52 +21,22 @@ class ControllerHome extends Controller {
     require_once File::getApp(array("views", "view.php"));
   }
 
-  public static function contact() {
+  public static function contact(): void {
     $page_title = 'Contact';
     $view = 'contact';
     require_once File::getApp(array("views", "view.php"));
   }
 
   public static function envoiemail() {
-    $sujet = $_POST['objet'];
-    $contenu = $_POST['commentaireUser'];
-
-    // Create instance of PHPMailer
-    $mail = new PHPMailer();
-    // Set mailer to use smtp
-    $mail->isSMTP();
-    // Define smtp host
-    $mail->Host = "smtp.gmail.com";
-    // Enable smtp authentication
-    $mail->SMTPAuth = true;
-    // Set smtp encryption type (ssl/tls)
-    $mail->SMTPSecure = "tls";
-    // Port to connect smtp
-    $mail->Port = "587";
-    // Set gmail username
-    $mail->Username = "donotaxelle@gmail.com"; // email sender
-    // Set gmail password
-    $mail->Password = "Solosabre4"; // mdp email
-    // Email subject
-    $mail->Subject = $sujet;
-    // Set sender email
-    $mail->setFrom('osef@gmail.com'); // inutile, je n'ai pas trouvé où ça apparaissait dans le mail
-    //// Enable HTML
-    $mail->isHTML(true);
-    // Attachment
-    //$mail->addAttachment(''); // pièce jointe si besoin
-    //// Email body
-    $mail->Body = $contenu;
-    // Add recipient
-    $mail->addAddress('lkhclagclagcm@yopmail.com'); // email destination
-    // Finally send email
-    if ($mail->send()) {
-      self::error("Envoie mail", "Email Envoyé !");
-    } else {
-      self::error("Envoie mail", "Le message ne peut pas être envoyé...");
+    if (isset($_POST['objet'], $_POST['commentaireUser'])) {
+      $sujet = $_POST['objet'];
+      $contenu = $_POST['commentaireUser'];
+      $mail = 'solo-admin@yopmail.com';
+      if (self::sendMail($mail, $mail, $sujet, $contenu))
+        self::error("Contact", "Bon envoi du mail contact.");
+      else
+        self::error("Contact", "Erreur dans l'envoi du mail.");
     }
-    // Closing smtp connection
-    $mail->smtpClose();
-    ControllerHome::contact();
+    self::contact();
   }
 }

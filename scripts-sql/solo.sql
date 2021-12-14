@@ -319,10 +319,11 @@ COMMIT;
 --
 -- Trigger de création d'adresse et de panier
 --
-CREATE TRIGGER `after_insert_user2` AFTER INSERT ON `proj__user`
- FOR EACH ROW INSERT INTO proj__address (proj__address.address_id, proj__address.user_id) VALUES (NULL, NEW.user_id);
 CREATE TRIGGER `after_insert_user` AFTER INSERT ON `proj__user`
- FOR EACH ROW INSERT INTO proj__shopping_cart (proj__shopping_cart.cart_id, proj__shopping_cart.customer_id) VALUES (NULL, NEW.user_id);
+ FOR EACH ROW BEGIN
+  INSERT INTO `proj__address` (`user_id`) VALUES (NEW.`user_id`);
+  INSERT INTO `proj__shopping_cart` (`customer_id`) VALUES (NEW.`user_id`);
+END;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

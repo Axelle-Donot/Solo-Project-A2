@@ -52,7 +52,7 @@ class ModelOrdered_product extends Model {
     return $state;
   }
 
-  private static function totalPrice($cart) {
+  public static function totalPrice($cart) {
     $total_price = 0;
     $items = ModelCart_item::getAllItems($cart);
     foreach ($items as $key => $value) {

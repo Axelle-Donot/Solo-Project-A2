@@ -24,27 +24,6 @@ class ModelUser extends Model {
     }
   }
 
-
-  public static function create(array $data): bool {
-    $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`, `nonce`)
-VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, :nonce_tag);";
-    try {
-      $req_prep = self::getPdo()->prepare($sql);
-      $state = $req_prep->execute(array(
-        "lastname_tag" => $data["last_name"],
-        "firstname_tag" => $data["first_name"],
-        "username_tag" => $data["username"],
-        "mail_tag" => $data["mail"],
-        "password_tag" => $data['password'],
-        "nonce_tag" => $data['nonce']
-      ));
-    } catch (PDOException $e) {
-      if (Conf::getDebug()) echo $e->getMessage();
-      return false;
-    }
-    return $state;
-  }
-
   public static function checkPassword(string $mail, string $password): bool {
     $password_hashed = Security::hacher($password);
     $sql = "SELECT COUNT(user_id) AS nbOfAccounts FROM `proj__user` WHERE `mail`=:mail_tag AND `password`=:password_tag;";
