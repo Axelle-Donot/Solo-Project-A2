@@ -60,17 +60,16 @@ class Model {
     try {
       $db = self::getPdo();
       $rep = $db->prepare($sql);
-      $rep->execute(array("tag" => $primaryValue));
+      $state = $rep->execute(array("tag" => $primaryValue));
       $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
       $el = $rep->fetch();
     } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-        echo $e->getMessage();
-      }
+      if (Conf::getDebug()) echo $e->getMessage();
       return false;
     }
 
-    return $el ?? false;
+    if (!$state) return false;
+    return $el;
   }
 
   public static function delete($primaryValue) {

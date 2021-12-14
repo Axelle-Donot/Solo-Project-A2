@@ -2,6 +2,7 @@
 require_once File::getApp(array("models", "Model.php"));
 require_once File::getApp(array("models", "ModelImages.php"));
 require_once File::getApp(array("models", "ModelDiscount.php"));
+require_once File::getApp(array("models", "ModelTag.php"));
 
 class ModelProduct extends Model {
   private $product_id;
