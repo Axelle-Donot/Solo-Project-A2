@@ -69,6 +69,86 @@ class Model {
       }
       return false;
     }
+
+    return $el ?? false;
+  }
+
+  public static function delete($primaryValue){
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $pkey = static::$primary;
+
+    $sql = "DELETE FROM proj__" . $table_name . " WHERE " . $pkey . "=:tag";
+    $db = self::getPdo();
+    $rep = $db->prepare($sql);
+    $rep->execute(array("tag" => $primaryValue));
+  }
+
+  public static function update($tab,$primaryValue){
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $pkey = static::$primary;
+
+    $amodif = "";
+    
+    foreach ($tab as $key => $value){
+      $amodif = $amodif . $key . " = \"" . $value . "\","; 
+    }
+
+    $modif = rtrim($amodif,",");
+
+    $sql = "UPDATE proj__" . $table_name . " SET " . $modif . " WHERE " . $pkey . "=:tag";
+    try {
+
+      $db = self::getPdo();
+      $rep = $db->prepare($sql);
+      $rep->execute(array("tag" => $primaryValue));
+      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+      $el = $rep->fetch();
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+
+    return $el ?? false;
+  }
+
+  public static function create($tab){
+    $table_name = static::$object;
+    $class_name = "Model" . ucfirst($table_name);
+    $pkey = static::$primary;
+
+    $attribut = "(";
+    $valeurs = "(";
+
+    foreach ($tab as $key => $value){
+      $attribut = $attribut . $key . " ," ;
+      $valeurs = $valeurs . " \" " . $value . " \"," ;
+    }
+
+    $attrib = rtrim($attribut,",");
+    $val = rtrim($valeurs,",");
+    $attrib = $attrib . ")";
+    $val  = $val . ")";
+
+
+    $sql = "INSERT INTO proj__"  . $table_name . $attrib . " VALUES " . $val;
+
+    try {
+      $db = self::getPdo();
+      $rep = $db->prepare($sql);
+      $rep->execute();
+      $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+      $el = $rep->fetch();
+    } catch (PDOException $e) {
+      if (Conf::getDebug()) {
+        echo $e->getMessage();
+      }
+      return false;
+    }
+
     return $el ?? false;
   }
 }

@@ -24,14 +24,15 @@ class ModelUser extends Model {
     }
   }
 
-  public static function create(array $data): bool {
+
+  /*public static function create(array $data): bool {
     $sql = "INSERT INTO `proj__user` (`username`, `password`, `last_name`, `first_name`, `mail`, `nonce`)
 VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, :nonce_tag);";
     try {
       $req_prep = self::getPdo()->prepare($sql);
       $state = $req_prep->execute(array(
-        "lastname_tag" => $data["lastname"],
-        "firstname_tag" => $data["firstname"],
+        "lastname_tag" => $data["last_name"],
+        "firstname_tag" => $data["first_name"],
         "username_tag" => $data["username"],
         "mail_tag" => $data["mail"],
         "password_tag" => Security::hacher($data['password']),
@@ -42,7 +43,7 @@ VALUES (:username_tag, :password_tag, :lastname_tag, :firstname_tag, :mail_tag, 
       return false;
     }
     return $state;
-  }
+  }*/
 
   public static function checkPassword(string $mail, string $password): bool {
     $password_hashed = Security::hacher($password);

@@ -1,3 +1,4 @@
+
 <div class="detail">
   <h2>Produit <?= htmlspecialchars($value->get("name")) ?></h2>
   <img src="<?= $value->getImage() ?>" class="rounded" alt="img du produit <?= htmlspecialchars($value->get("name")) ?>"/>
@@ -11,3 +12,4 @@
   <?php $id = urlencode($value->get("product_id")); ?>
   <a class="btn btn-outline-info" href="?a=add&c=cart&id=<?= $id ?>">Ajouter au panier</a>
 </div>
+

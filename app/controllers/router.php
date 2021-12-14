@@ -1,5 +1,7 @@
 <?php
+
 require_once File::getApp(array("controllers", "Controller.php"));
+
 
 $action = $_GET['a'] ?? "home";
 $controller = $_GET['c'] ?? "home";

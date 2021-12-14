@@ -75,6 +75,7 @@ class ControllerUser extends Controller {
       Session::resetSession();
     }
     header("Location: ?a=home");
+
   }
 
   public static function register(): void {
@@ -115,8 +116,8 @@ class ControllerUser extends Controller {
 
       // On est maintenant sûr d'avoir un formulaire valide
       $data = array(
-        "lastname" => $_POST["lastname"],
-        "firstname" => $_POST["firstname"],
+        "last_name" => $_POST["lastname"],
+        "first_name" => $_POST["firstname"],
         "username" => $_POST["username"],
         "mail" => $_POST["mail"],
         "password" => $_POST["password"]
